@@ -9,3 +9,4 @@ Date: Nov 07, 2025
 * 1. Added more functionality. added regex engine class to parse LLM output to parse the output to other game windows. Added xAI api class to interface with Grok API.
 * 2. Created Dev0 Branch.
 * 3. Added a inventory window and button.
+* 4. Refactored main .java file and seperated code by function per java file.
