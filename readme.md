@@ -10,3 +10,4 @@ Date: Nov 07, 2025
 * 2. Created Dev0 Branch.
 * 3. Added a inventory window and button.
 * 4. Refactored main .java file and seperated code by function per java file.
+* 5. Modified System prompt for xAI LLM.
