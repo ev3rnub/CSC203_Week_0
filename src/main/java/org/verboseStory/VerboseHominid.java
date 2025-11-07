@@ -36,6 +36,7 @@ import javax.swing.text.*;        // Text package (Document, StyledDocument, Att
  *  Third‑party JSON library (Google Gson)
  * ------------------------------------------------------------- */
 import com.google.gson.*;         // Gson core classes (Gson, JsonElement, JsonObject, JsonParser)
+import org.jetbrains.annotations.NotNull;
 /* -------------------------------------------------------------
 *   Regex
 * -------------------------------------------------------------- */
@@ -98,6 +99,7 @@ public class VerboseHominid {
         private final JTextField inputField;
         private final JButton sendButton;
         private final JButton sceneButton;
+        private final JButton inventoryButton;
         private final BlockingQueue<String> inputQueue;
 
         GameWindow(BlockingQueue<String> inputQueue) {
@@ -147,11 +149,18 @@ public class VerboseHominid {
             sceneButton.setBackground(new Color(0x2A2A2A));
             sceneButton.setForeground(Color.BLACK);
 
+            inventoryButton = new JButton("Inventory");
+            inventoryButton.setFocusPainted(false);
+            inventoryButton.setBackground(new Color(0x2A2A2A));
+            inventoryButton.setForeground(Color.BLACK);
+
             inputPanel.add(inputField);
             inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
             inputPanel.add(sendButton);
             inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
             inputPanel.add(sceneButton);
+            inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
+            inputPanel.add(inventoryButton);
             main.add(inputPanel, BorderLayout.SOUTH);
 
             // UI Events Enter, send btn.
@@ -179,6 +188,15 @@ public class VerboseHominid {
                 }
             });
 
+            inventoryButton.addActionListener(e -> {
+                InventoryWindow inventoryWindow = Inventory.getWindow();
+                if (inventoryWindow != null) {
+                    inventoryWindow.setVisible(!inventoryWindow.isVisible());
+                } else {
+                    GameEngine.red_chat_output("InventoryWindow not initilized");
+                }
+            });
+
             //Refocus input field
             addWindowListener(new WindowAdapter() {
                 @Override public void windowOpened(WindowEvent e) {
@@ -203,7 +221,54 @@ public class VerboseHominid {
         }
     }
 
-    // Main Chat Text Window
+    // JFrame Window to display Inventory Text
+    private static final class InventoryWindow extends JFrame {
+        // create a JTextPane named scenePane, this will hold our scene text.
+        private final JTextPane inventoryPane;
+        private final BlockingQueue<String> inventoryQueue;
+
+        InventoryWindow(BlockingQueue<String> inventoryQueue, String aTitle) {
+            super("Verbose Hominid v0.0.1: " + aTitle);
+            this.inventoryQueue = inventoryQueue;
+
+            //setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setSize(680, 420);
+            setLocationRelativeTo(null);
+            setBackground(Color.BLACK);
+
+            JPanel main = new JPanel(new BorderLayout(5, 5));
+            main.setBackground(Color.BLACK);
+            setContentPane(main);
+
+            /* ---------- Inventory pane init ---------- */
+            inventoryPane = new JTextPane();
+            inventoryPane.setEditable(false);
+            inventoryPane.setBackground(Color.BLACK);
+            inventoryPane.setForeground(Color.WHITE);
+            inventoryPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+            inventoryPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+            JScrollPane scroll = new JScrollPane(inventoryPane);
+            scroll.getViewport().setBackground(Color.BLACK);
+            main.add(scroll, BorderLayout.CENTER);
+
+        }
+
+        void appendToWindow(Color color, String text) {
+            SwingUtilities.invokeLater(() -> {
+                StyledDocument doc = inventoryPane.getStyledDocument();
+                Style style = inventoryPane.addStyle("color", null);
+                StyleConstants.setForeground(style, color);
+                try {
+                    doc.insertString(doc.getLength(), text + "\n", style);
+                    inventoryPane.setCaretPosition(doc.getLength());
+                } catch (BadLocationException ex) {
+                    ex.printStackTrace();
+                }
+            });
+        }
+    }
+
+    // Main Chat Text Window Interface
     private static final class ChatWindow {
         private static GameWindow window;
 
@@ -223,19 +288,50 @@ public class VerboseHominid {
             }
         }
     }
+
+    // Scene Text Window Interface
+    private static final class Scene {
+        private static SceneWindow window;
+
+        static void setWindow(SceneWindow w) { window = w;}
+        static SceneWindow getWindow() {return window;};
+        static void updateSceneWindow(Color color, String message) {
+            if (window != null) {
+                window.appendScene(color, message);
+            }else{
+                GameEngine.red_chat_output("Scene Window NULL");
+            }
+        }
+    }
+
+    // Inventory Window Interface
+    private static final class Inventory {
+        private static InventoryWindow window;
+
+        static void setWindow(InventoryWindow w) { window = w;}
+        static InventoryWindow getWindow() {return window;};
+        static void updateInventoryWindow(Color color, String message) {
+            if (window != null) {
+                window.appendToWindow(color, message);
+            }else{
+                GameEngine.red_chat_output("Some Window NULL");
+            }
+        }
+    }
+
     // regex parser
     private static final class RegexEngine {
         private RegexEngine() { }
         static void parseOutput(String someString){
             Pattern scene = Pattern.compile("\\[SCENE\\](.*)\\[ENDSCENE\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
-            Pattern abilityScores = Pattern.compile("\\[ABILITYSCORES\\](.*)\\[ENDABILITYSCORES\\]", Pattern.CASE_INSENSITIVE);
-            Pattern inventory = Pattern.compile("\\[INVENTORY\\](.*)\\[ENDINVENTORY\\]", Pattern.CASE_INSENSITIVE);
-            Pattern stats = Pattern.compile("\\[STATS\\](.*)\\[ENDSTATS\\]", Pattern.CASE_INSENSITIVE);
-            Pattern action = Pattern.compile("\\[ACTION\\](.*)\\[ENDACTION\\]", Pattern.CASE_INSENSITIVE);
-            Pattern roll = Pattern.compile("\\[ROLL\\](.*)\\[ENDROLL\\]", Pattern.CASE_INSENSITIVE);
-            Pattern result = Pattern.compile("\\[RESULT\\](.*)\\[ENDRESULT\\]", Pattern.CASE_INSENSITIVE);
-            Pattern experience = Pattern.compile("\\[XP\\](.*)\\[ENDXP\\]", Pattern.CASE_INSENSITIVE);
-            Pattern player = Pattern.compile("\\[PLAYER\\](.*)\\[ENDPLAYER\\]", Pattern.CASE_INSENSITIVE);
+            Pattern abilityScores = Pattern.compile("\\[ABILITYSCORES\\](.*)\\[ENDABILITYSCORES\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern inventory = Pattern.compile("\\[INVENTORY\\](.*)\\[ENDINVENTORY\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern stats = Pattern.compile("\\[STATS\\](.*)\\[ENDSTATS\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern action = Pattern.compile("\\[ACTION\\](.*)\\[ENDACTION\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern roll = Pattern.compile("\\[ROLL\\](.*)\\[ENDROLL\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern result = Pattern.compile("\\[RESULT\\](.*)\\[ENDRESULT\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern experience = Pattern.compile("\\[XP\\](.*)\\[ENDXP\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Pattern player = Pattern.compile("\\[PLAYER\\](.*)\\[ENDPLAYER\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
             Matcher sceneMatch = scene.matcher(someString);
             Matcher abilityMatch = abilityScores.matcher(someString);
             Matcher inventoryMatch = inventory.matcher(someString);
@@ -249,19 +345,8 @@ public class VerboseHominid {
             if (sceneMatch.find()) {
                 GameEngine.green_scene_output(sceneMatch.group(1));
             }
-        }
-    }
-    // Scene Text Window
-    private static final class Scene {
-        private static SceneWindow window;
-
-        static void setWindow(SceneWindow w) { window = w;}
-        static SceneWindow getWindow() {return window;};
-        static void updateSceneWindow(Color color, String message) {
-            if (window != null) {
-                window.appendScene(color, message);
-            }else{
-                GameEngine.red_chat_output("Scene Window NULL");
+            if (inventoryMatch.find()) {
+                GameEngine.green_inventory_output(inventoryMatch.group(1));
             }
         }
     }
@@ -318,7 +403,7 @@ public class VerboseHominid {
                     if (confirmed.equalsIgnoreCase("y") || confirmed.equalsIgnoreCase("yes")) {
                         STARTED = true;
                         playerKey = keyWord;
-                        GameEngine.red_chat_output(playerKey + ", Your simulation has started!");
+                        GameEngine.red_chat_output(playerKey + ", Your simulation is starting!");
                     } else {
                         STARTED = false;
                         get_key_word("welcome");   // retry
@@ -347,6 +432,12 @@ public class VerboseHominid {
         public static void green_scene_output(String s)  { Scene.updateSceneWindow(Color.GREEN,  s); }
         public static void white_scene_output(String s)  { Scene.updateSceneWindow(Color.WHITE,  s); }
         public static void magenta_scene_output(String s){ Scene.updateSceneWindow(Color.MAGENTA,s); }
+        /* ------------------------Color Inventory Helpers ------------------------*/
+        public static void blue_inventory_output(String s)   { Inventory.updateInventoryWindow(Color.BLUE,   s); }
+        public static void red_inventory_output(String s)    { Inventory.updateInventoryWindow(Color.RED,    s); }
+        public static void green_inventory_output(String s)  { Inventory.updateInventoryWindow(Color.GREEN,  s); }
+        public static void white_inventory_output(String s)  { Inventory.updateInventoryWindow(Color.WHITE,  s); }
+        public static void magenta_inventory_output(String s){ Inventory.updateInventoryWindow(Color.MAGENTA,s); }
     }
 
    // Grok via xAI. Takes user input, and passes to Grok, awaits response
@@ -456,6 +547,7 @@ public class VerboseHominid {
 
         // System prompt
         // WIP: Refactor to FileRead.
+        @NotNull
         private static String buildSysInstruct() {
             StringBuilder sb = new StringBuilder();
             sb.append("You are a Subject Matter Expert on Story telling and are considered a Story Master (SM) for a text-only, turn-based role-playing adventure game. Your job is to narrate the world (using the World Knowledge below), present choices, resolve ALL actions with random range 0-100 rolls and keep track of player stats, inventory, hit points, and story progression. Ensure there is a light diety/god, and one of dark diety/god.\n")
@@ -612,20 +704,25 @@ public class VerboseHominid {
     }
 
     public static void main(String[] args) {
-        // shared queue
+        // shared linked event blocking queue
         BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 
         // Build UI and start engine *inside* the EDT task
         SwingUtilities.invokeLater(() -> {
-            // define a Window
+            // define main window
             GameWindow window = new GameWindow(queue);
             ChatWindow.setWindow(window);
             window.setVisible(true);
 
+            // define a scene window
             SceneWindow scene_window = new SceneWindow(queue);
             Scene.setWindow(scene_window);
             scene_window.setVisible(false);
 
+            // define a inventory window
+            InventoryWindow inventory_window = new InventoryWindow(queue, "Inventory");
+            Inventory.setWindow(inventory_window);
+            inventory_window.setVisible(false);
 
             // define game engine, and use the same queue as our window
             GameEngine engine = new GameEngine(queue);
