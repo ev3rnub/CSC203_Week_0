@@ -20,7 +20,7 @@ public final class ChatWindow {
     public static void updateChatWindow(Color color, String message) {
         if (window != null) {
             window.appendChat(color, message);
-            // Let the regex engine parse the output as a side‑effect.
+            // Let the regex engine parse.
             RegexEngine.parseOutput(message);
         } else {
             // Fallback – still visible if UI never started.

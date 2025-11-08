@@ -52,7 +52,7 @@ public final class XaiApi {
 
                 String resp = sendRequest(client, gson, apiKey);
                 GameEngine.white_chat_output("********** StoryMaster **********");
-                GameEngine.green_chat_output(resp);
+                GameEngine.white_chat_output(resp);
                 JsonObject assistant = new JsonObject();
                 assistant.addProperty("role", "assistant");
                 assistant.addProperty("content", resp);
@@ -79,7 +79,7 @@ public final class XaiApi {
 
                 String resp = sendRequest(client, gson, apiKey);
                 GameEngine.white_chat_output("********** StoryMaster **********");
-                GameEngine.green_chat_output(resp);
+                GameEngine.white_chat_output(resp);
                 JsonObject assistantMsg = new JsonObject();
                 assistantMsg.addProperty("role", "assistant");
                 assistantMsg.addProperty("content", resp);
@@ -217,7 +217,7 @@ public final class XaiApi {
                 .append(" There are very few humanoid‑cat hybrids from the 1st moon Kata, they are called Kata. They are taken from birth from a moon by powerful Geomancers to be trained to participate in the Kata Games in the main Capital of Zirrin; The majority are in captivity, a group did break free and thrive in places of the wild, young male wild Kata who were born on Arin usually break from their group and seek adventure, or revenge. While they have a long lifespan due to the stresses of Arin, Arin born Kata only live an average of 100 years. They are generally very lean and muscular and about 7 feet tall, covered in fur and look essentially like a humanoid cat. Kata have the capability to use “purring” or sonics to heal/mend broken bones and injuries over a short period of time, to others and themselves. Kata are warriors and are direct in communication. They can speak Kata (A series of clicks and tones, almost like singing meows in a deep bass tone) and Humakin. Katakin can climb almost anything, except Tanic. Katakin can wield any weapon or dawn any armor they choose. They mostly perfer light armor that doesn't make much noise.\n")
                 .append(" Latonians:\n")
                 .append(" NOTE: Playable Race\n")
-                .append(" A race of super highly intelligent small humanoids that live in a ring of lush warm vegetation located in the North Pole of Arin, they are called the Jalikins. Their body composition is generally small of stature but also very fit, muscular and strong for their physical size. They resemble Humakin children when fully garbed. They range from 3 to 4 feet in height. They are essentially unknown to all of the other races and often only leave the ring's higher gravity well in 1-9 years at a time. If they do leave their ring, they pretend to be Parentless Humakin Children, however they can fight if required, but only as a last resort. Jalikins have an innate ability to understand,figure out any technology, problem, challenge or language given enough time. They also have the ability to influence other less intelligence minds to do their bidding, using their natural tonality of their voice, they can involuntary influence any living entity, some even say they can control Drokin. They are generally non malicious in nature, however not much is known of their demeanor, as most Jalikins generally keep to themselves even when in groups, only showing their true demeanor around kin.\n")
+                .append(" A race of super highly intelligent small humanoids that live in a ring of lush warm vegetation located in the North Pole of Arin, they are called the Latonians. Their body composition is generally small of stature but also very fit, muscular and strong for their physical size. They resemble Humakin children when fully garbed. They range from 3 to 5 feet in height. They are essentially unknown to all of the other races and often only leave the ring's higher gravity well in 1-9 years at a time. If they do leave their ring, they pretend to be Parentless Humakin Children, however they can fight if required, but only as a last resort. Latonians have an innate ability to understand,figure out any technology, problem, challenge or language given enough time. They also have the ability to influence other less intelligence minds to do their bidding, using their natural tonality of their voice, they can involuntary influence any living entity, some even say they can control Drokin. They are generally non malicious in nature, however not much is known of their demeanor, as most Latonians generally keep to themselves even when in groups, only showing their true demeanor around kin. The Latonians designed, built and deployed SunHome13 Space Station in recent years.\n")
                 .append(" Malilarians:\n")
                 .append(" NOTE: Playable Race\n")
                 .append(" A race from the Wildlands, some call them Wraiths, Extraordinary deadly fighters who have learned how to\n")

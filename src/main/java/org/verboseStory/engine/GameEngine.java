@@ -52,7 +52,7 @@ public final class GameEngine {
     public void get_key_word(String aType) throws Exception {
         switch (aType) {
             case "welcome" -> {
-                white_chat_output("Welcome to Verbose Hominid, a text based adventure in a fictional hominid world! Please report any bugs and or requested features to the developer");
+                white_chat_output("Welcome to Verbose Hominid, a Science Fiction/Fantasy text based adventure in a fictional hominid world! Work-In-Progress");
                 white_chat_output("Enter an Account Name, this will be used to access your session.");
                 String keyWord = readLine();
                 magenta_chat_output("Your Account Name is: " + keyWord);

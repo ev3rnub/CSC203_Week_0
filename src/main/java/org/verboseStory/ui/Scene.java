@@ -3,7 +3,7 @@ import org.verboseStory.engine.GameEngine;
 import java.awt.Color;
 
 /**
- * Facade that holds a reference to the {@link SceneWindow}
+ * holds a reference to the {@link SceneWindow}
  * and forwards colour‑coded messages.
  */
 public final class Scene {

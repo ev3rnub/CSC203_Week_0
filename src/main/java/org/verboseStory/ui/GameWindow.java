@@ -57,8 +57,8 @@ public final class GameWindow extends JFrame {
         inputField = new JTextField();
         inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         inputField.setBackground(Color.DARK_GRAY);
-        inputField.setForeground(Color.GREEN);
-        inputField.setCaretColor(Color.GREEN);
+        inputField.setForeground(Color.WHITE);
+        inputField.setCaretColor(Color.WHITE);
         inputField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 
         sendButton = createButton("Send");
