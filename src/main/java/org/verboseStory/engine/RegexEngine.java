@@ -33,11 +33,11 @@ public final class RegexEngine {
         Matcher playerMatch = player.matcher(someString);
 
         if (sceneMatch.find()) {
-            GameEngine.green_scene_output(sceneMatch.group(1));
+            GameEngine.white_scene_output(sceneMatch.group(1));
         }
 
         if (inventoryMatch.find()) {
-            GameEngine.green_inventory_output(inventoryMatch.group(1));
+            GameEngine.white_inventory_output(inventoryMatch.group(1));
         }
     }
 }

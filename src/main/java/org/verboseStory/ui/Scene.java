@@ -11,7 +11,7 @@ public final class Scene {
 
     private Scene() {}
 
-    public static void setWindow(SceneWindow w) { window = w; }
+    public static void setWindow(SceneWindow w) { window = w; new GameEngine.DelayedMessage.SomeMessage(500, ".ChatWindow");}
     public static SceneWindow getWindow() { return window; }
 
     public static void updateSceneWindow(Color color, String message) {

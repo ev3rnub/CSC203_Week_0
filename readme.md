@@ -1,6 +1,6 @@
 Course: CSC203
 Author: Chad Verbus
-Date: Nov 07, 2025
+Date: Nov 08, 2025
 
 
 ⚠️ Working Document – This README is a living document that will be updated throughout the semester as new topics, assignments, and resources become available.  
@@ -11,3 +11,9 @@ Date: Nov 07, 2025
 * 3. Added a inventory window and button.
 * 4. Refactored main .java file and seperated code by function per java file.
 * 5. Modified System prompt for xAI LLM.
+
+## 11/08/2025
+* 1. Created Branch for this weeks assignment starbase13, specifically start, renamed for RP purposes to SunHome13. Enjoy :)
+* 2. Modified system prompt for starbase13 start. 
+* 3. Modified Color theme. 
+* 4. Updated readme.md

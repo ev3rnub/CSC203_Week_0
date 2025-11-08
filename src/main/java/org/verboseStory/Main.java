@@ -23,7 +23,6 @@ public class Main {
     public static void main(String[] args) {
         // One queue is enough for all UI → engine communication.
         BlockingQueue<String> queue = new LinkedBlockingQueue<>();
-
         // Build UI on the EDT.
         SwingUtilities.invokeLater(() -> {
             GameWindow gameWindow = new GameWindow(queue);
