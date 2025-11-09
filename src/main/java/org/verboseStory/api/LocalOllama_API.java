@@ -17,13 +17,13 @@ import java.util.concurrent.BlockingQueue;
  */
 public final class LocalOllama_API {
 
-    /** Ollama base URL (default local installation). */
+    /** Ollama base URL */
     private static final String API_BASE_URL = "http://localhost:11434/v1";
 
-    /** Model name that the game uses. */
+    /** Model name that the VH uses. */
     private static final String MODEL = "DMVHSH13_v0:latest";
 
-    /** Holds the last N messages to preserve context. */
+    /** Holds messages to preserve context. */
     private static final List<JsonObject> messages = new ArrayList<>();
 
     /** Public entry point used by {@link GameEngine}. */
@@ -32,16 +32,6 @@ public final class LocalOllama_API {
         Gson gson = new Gson();
 
         try {
-            // -----------------------------------------------------------------
-            // OPTIONAL: if you still need a static system prompt you can add it
-            // manually here (the previous buildSysInstruct() method was removed).
-            // -----------------------------------------------------------------
-            // Example:
-            // JsonObject systemMsg = new JsonObject();
-            // systemMsg.addProperty("role", "system");
-            // systemMsg.addProperty("content", "YOUR SYSTEM PROMPT HERE");
-            // messages.add(systemMsg);
-
             if ("BEGIN_GAME".equalsIgnoreCase(initialPrompt)) {
                 JsonObject init = new JsonObject();
                 init.addProperty("role", "user");
@@ -116,7 +106,7 @@ public final class LocalOllama_API {
         }
         body.add("messages", msgs);
 
-        // Ollama‑specific parameters (feel free to tweak)
+        // Ollama‑specific parameters
         body.addProperty("max_tokens", 20000);
         body.addProperty("temperature", 0.5);
         body.addProperty("stream", false);
@@ -135,8 +125,9 @@ public final class LocalOllama_API {
             throw new IOException("Ollama request failed: " + response.statusCode()
                     + " – " + response.body());
         }
-
+//      Take the response body and use gson to create a json object and assign it the name of json
         JsonObject json = gson.fromJson(response.body(), JsonObject.class);
+//      Return a json array of LLM output.
         return json.getAsJsonArray("choices")
                 .get(0).getAsJsonObject()
                 .getAsJsonObject("message")

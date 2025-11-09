@@ -22,17 +22,17 @@ public final class GameEngine {
     private static final String RED     = "\u001B[31m";
     private static final String BLACK   = "\u001B[30m";
 
-    // ----- mutable state -----
+    // working vars
     public static volatile boolean STARTED = false;
     public static volatile String playerKey = "";
-
+    public static volatile String playerPhrase = "";
     public final BlockingQueue<String> inputQueue;
 
     public GameEngine(BlockingQueue<String> inputQueue) {
         this.inputQueue = inputQueue;
     }
 
-    // ----- UI helpers ---------------------------------------------------
+//    return the first string from inputQueue.
     private String readLine() throws InterruptedException {
         return inputQueue.take();
     }
@@ -41,7 +41,7 @@ public final class GameEngine {
     public void run() {
         try {
             get_key_word("welcome");
-            dialog_start();
+            dialog_start(); // starts player game/interaction
         } catch (Exception e) {
             red_chat_output("UNHANDLED EXCEPTION: " + e);
             e.printStackTrace();
@@ -82,6 +82,7 @@ public final class GameEngine {
                 if (confirmed.equalsIgnoreCase("y") || confirmed.equalsIgnoreCase("yes")) {
                     STARTED = true;
                     playerKey = keyWord;
+                    playerPhrase = keyPhrase;
                     red_chat_output(playerKey + ", Your simulation is starting!");
                 } else {
                     STARTED = false;
