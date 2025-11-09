@@ -47,6 +47,7 @@ public final class GameEngine {
             e.printStackTrace();
         }
     }
+//    TITLE text in ascii art
     public class green_title {
         public static void printAsciiArt() {
             green_chat_output("V   VEEEEERRRR BBBB  OOO  SSS EEEEE     H   H OOO M   M III N   N III DDDD       SSS U   UN   NH   H OOO M   MEEEEE  1   333 ");
@@ -58,6 +59,7 @@ public final class GameEngine {
         }
     }
     // ----- conversation flow ---------------------------------------------
+//     this is the first text that gets pushed to the GUI.
     public void get_key_word(String aType) throws Exception {
         switch (aType) {
             case "welcome" -> {
@@ -67,6 +69,7 @@ public final class GameEngine {
                 blue_chat_output("Note0: There is currently no in game music, use your favorite non vocal music playlist.");
                 blue_chat_output("Note1: Account and account Phrase is placeholder, so enter what you will");
                 green_chat_output("Note2: You can use your words instead of using the options given. Use your imagination.");
+                green_chat_output("Note3: A xAI api key is required, VH looks for environmental variable xAI_API_KEY.\n");
                 white_chat_output("\n");
                 white_chat_output("Enter an Account Name, this will be used to access your session.");
                 String keyWord = readLine();
