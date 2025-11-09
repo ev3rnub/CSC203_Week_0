@@ -26,7 +26,7 @@ public final class GameWindow extends JFrame {
     private final BlockingQueue<String> inputQueue;
 
     public GameWindow(BlockingQueue<String> inputQueue) {
-        super("Verbose Hominid v0.0.1: Story Master");
+        super("verbose hominid:sunhome13 v0.0.4: Story Master");
         this.inputQueue = inputQueue;
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);

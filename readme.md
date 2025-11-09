@@ -15,5 +15,6 @@ Date: Nov 08, 2025
 ## 11/08/2025
 * 1. Created Branch for this weeks assignment starbase13, specifically start, renamed for RP purposes to SunHome13. Enjoy :)
 * 2. Modified system prompt for starbase13 start. 
-* 3. Modified Color theme. 
-* 4. Updated readme.md
+* 3. Modified Color theme.
+* 4. Added a local LLM class for a local ollama instance.
+* 5. Updated readme.md

@@ -17,7 +17,7 @@ import java.util.concurrent.BlockingQueue;
  * All network I/O lives here – the rest of the code never talks
  * to `HttpClient` directly.
  */
-public final class XaiApi {
+public final class Xai_Api {
 
     private static final String API_BASE_URL = "https://api.x.ai/v1";
     private static final String MODEL = "grok-3";
@@ -231,7 +231,7 @@ public final class XaiApi {
                 .append(" Whereas many other races would perish on contact with a true weapon of power a Malilarian would become almost godlike in certain aspects.\n")
                 .append(" Malilarian's are generally very muscular and lean regardless of build, they are generally quiet unless spoken to, and even then they say few words.\n")
                 .append(" The words they speak invoke an almost involuntary compliance and respect from the other races except for the Katakin and Jalikins. The first Malilarians\n")
-                .append(" were said to have defeated or escaped their slave masters hold. No one really knows except for what is passed down from generation to generation.\n")
+                .append(" were said to have defeated or escaped their slave masters hold. No one really knows except for what is passed down from generation to generation. Some desperate Hominids hunt Malilarian folk for profit. \n")
                 .append(" Drokin:\n")
                 .append(" NOTE: Non‑Playable Race\n")
                 .append(" A race of humanoids who live under the surface. They are the oldest race of the planet and are highly intelligent, magical creatures. They are very tall ranging from 7 to 9 feet in height, muscular but thin in stature. They have large eyes and can see in the inferred spectrum and or visible light by fliping an inner eyelid. They almost never surface as the sunlight affects most Crokin in a negative way, if left exposed for too long. They see the other races of Arin as imature and fast acting. They have the capability to bend light around them and hide in plain sight in broad day light. Some Crokin have adapted to the bright surface and walk in the daylight, many walk in the shadows however, never seen. They generally wield magically summoned weapons and armor.\n")

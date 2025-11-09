@@ -1,6 +1,5 @@
 package org.verboseStory;
 
-import org.verboseStory.api.XaiApi;
 import org.verboseStory.engine.GameEngine;
 import org.verboseStory.engine.GameEngineStaticHolder;
 import org.verboseStory.ui.GameWindow;

@@ -1,8 +1,8 @@
 package org.verboseStory.engine;
-
+import org.verboseStory.api.LocalOllama_API;
 import org.verboseStory.ui.Scene;
 import org.verboseStory.ui.Inventory;
-import org.verboseStory.api.XaiApi;
+import org.verboseStory.api.Xai_Api;
 import java.awt.Color;
 import java.util.concurrent.BlockingQueue;
 
@@ -47,12 +47,27 @@ public final class GameEngine {
             e.printStackTrace();
         }
     }
-
+    public class green_title {
+        public static void printAsciiArt() {
+            green_chat_output("V   VEEEEERRRR BBBB  OOO  SSS EEEEE     H   H OOO M   M III N   N III DDDD       SSS U   UN   NH   H OOO M   MEEEEE  1   333 ");
+            green_chat_output(" V  VE    R   RB   BO   OS    E         H   HO   OMM MM  I  NN  N  I  D   D  :  S    U   UNN  NH   HO   OMM MME     11      3");
+            green_chat_output(" V V EEE  RRRR BBBB O   O SSS EEE       HHHHHO   OM M M  I  N N N  I  D   D      SSS U   UN N NHHHHHO   OM M MEEE    1    33 ");
+            green_chat_output("  V  E    R R  B   BO   O   S E         H   HO   OM   M  I  N  NN  I  D   D  :     S U   UN  NNH   HO   OM   ME      1      3");
+            green_chat_output("  V  EEEEER  R BBBB  OOO SSS  EEEEE     H   H OOO M   M III N   N III DDDD      SSS   UUU N   NH   H OOO M   MEEEEE11111 333 ");
+            green_chat_output("\n\n");
+        }
+    }
     // ----- conversation flow ---------------------------------------------
     public void get_key_word(String aType) throws Exception {
         switch (aType) {
             case "welcome" -> {
+                green_title aTitle = new green_title();
+                aTitle.printAsciiArt();
                 white_chat_output("Welcome to Verbose Hominid, a Science Fiction/Fantasy text based adventure in a fictional hominid world! Work-In-Progress");
+                blue_chat_output("Note0: There is currently no in game music, use your favorite non vocal music playlist.");
+                blue_chat_output("Note1: Account and account Phrase is placeholder, so enter what you will");
+                green_chat_output("Note2: You can use your words instead of using the options given. Use your imagination.");
+                white_chat_output("\n");
                 white_chat_output("Enter an Account Name, this will be used to access your session.");
                 String keyWord = readLine();
                 magenta_chat_output("Your Account Name is: " + keyWord);
@@ -129,7 +144,8 @@ public final class GameEngine {
     }
     // ----- start the first API call ---------------------------------------
     public void dialog_start() {
-        XaiApi.invokeResponseFromGrok("BEGIN_GAME");
+        Xai_Api.invokeResponseFromGrok("BEGIN_GAME"); // XAI API
+        //LocalOllama_API.invokeResponseFromGrok("BEGIN_GAME");  //Local Ollama instance #Future
     }
 
     // ----- colour‑coded helpers (static, used by UI façade) ---------------
