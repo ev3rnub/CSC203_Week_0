@@ -1,30 +1,24 @@
 package org.verboseStory.ui;
-
+//my classes
 import org.verboseStory.engine.RegexEngine;
-import org.verboseStory.engine.GameEngine;
+
+//std
 import java.awt.Color;
-import javax.swing.SwingUtilities;
-import javax.swing.text.StyledDocument;
 
 /**
- * A tiny connector that forwards colored messages to the {@link GameWindow}.
- * It is deliberately package‑private – only UI code should call it.
+ * A tiny connector that forwards messages to the GameWindow.
  */
 public final class ChatWindow {
     private static GameWindow window;
-
-    private ChatWindow() { }
-
+    // stores reference for our game window
     public static void setWindow(GameWindow w) { window = w; }
-
+    // this class appends some message to our output queue. Then passes the message to RegexEngine to be parsed.
     public static void updateChatWindow(Color color, String message) {
         if (window != null) {
+            // appendChat to our game window
             window.appendChat(color, message);
-            // Let the regex engine parse.
+            // regex engine parse strings.
             RegexEngine.parseOutput(message);
-        } else {
-            // Fallback – still visible if UI never started.
-            GameEngine.red_chat_output(message);
         }
     }
 }

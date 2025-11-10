@@ -1,13 +1,13 @@
 package org.verboseStory.ui;
 
+//std
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Small window that shows the player's inventory.
- */
+//NOTE: see GameWindow.Java comments for detailed comments, it mostly duplicates most of the code.
+// Inventory Window
 public final class InventoryWindow extends JFrame {
 
     private final JTextPane inventoryPane;

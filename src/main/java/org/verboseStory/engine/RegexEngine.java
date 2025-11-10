@@ -15,7 +15,7 @@ public final class RegexEngine {
         // Regex patterns (pre‑compiled, reusable)
         Pattern scene = Pattern.compile("\\[SCENE\\](.*)\\[ENDSCENE\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         Pattern abilityScores = Pattern.compile("\\[ABILITYSCORES\\](.*)\\[ENDABILITYSCORES\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
-        Pattern inventory = Pattern.compile("\\[INVENTORY|INVENTORY UPDATE\\](.*)\\[ENDINVENTORY\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+        Pattern inventory = Pattern.compile("\\[INVENTORY\\](.*)\\[ENDINVENTORY\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         Pattern stats = Pattern.compile("\\[STATS\\](.*)\\[ENDSTATS\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         Pattern action = Pattern.compile("\\[ACTION\\](.*)\\[ENDACTION\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         Pattern roll = Pattern.compile("\\[ROLL\\](.*)\\[ENDROLL\\]", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);

@@ -1,59 +1,73 @@
 package org.verboseStory.ui;
 
+//my classes
 import org.verboseStory.engine.GameEngine;
-import org.verboseStory.engine.GameEngineStaticHolder;
-import org.verboseStory.ui.Scene;
-import org.verboseStory.ui.Inventory;
-import org.verboseStory.ui.SceneWindow;
-import org.verboseStory.ui.InventoryWindow;
-import org.verboseStory.engine.RegexEngine;
+
+//std
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Main chat window – contains the main chat pane and the input controls.
- */
+//main game window and the input controls/buttons, window title and provides
+// a method to append chat to our game window.
 public final class GameWindow extends JFrame {
-
+    // JtextPane is a text component that can be marked up with attributes that are represented graphically.
     private final JTextPane logPane;
+    // JTextField is a lightweight component that allows the editing of a single line of text. Its our input.
     private final JTextField inputField;
+    // buttons
     private final JButton sendButton;
     private final JButton sceneButton;
     private final JButton inventoryButton;
+    // this creates the queue we use to move messages from the user, and from the game engine to the UI. This allows
+    // the engine to block when we take from the queue.
     private final BlockingQueue<String> inputQueue;
 
+    // Game widow constructor, defines all the things our player observes.
     public GameWindow(BlockingQueue<String> inputQueue) {
-        super("verbose hominid:sunhome13 v0.0.4: Story Master");
+        // window title
+        super("Verbose Hominid:SunHome13 v0.0.4: Story Master");
+        // define queue
         this.inputQueue = inputQueue;
-
+        // on close, exit completely
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        // set window size
         setSize(1200, 780);
-        setLocationRelativeTo(null);
-        setBackground(Color.BLACK);
+        // instance a new JPanel with a new border layout
         JPanel main = new JPanel(new BorderLayout(5, 5));
+        // define its background color
         main.setBackground(Color.BLACK);
+        //set the content to main.
         setContentPane(main);
 
-        // ---- Log pane -------------------------------------------------
+        // Define readable area.
         logPane = new JTextPane();
+        // disable so the player can't edit the output.
         logPane.setEditable(false);
+        // define the background color
         logPane.setBackground(Color.BLACK);
+        // set the foreground color
         logPane.setForeground(Color.WHITE);
+        // define font type
         logPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+        // define window border
         logPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        // instance a scroll pane.
         JScrollPane scroll = new JScrollPane(logPane);
+        // define its background color.
         scroll.getViewport().setBackground(Color.BLACK);
+        //add it to our main
         main.add(scroll, BorderLayout.CENTER);
 
-        // ---- Input panel -----------------------------------------------
+        // Instance a new JPanel
         JPanel inputPanel = new JPanel();
         inputPanel.setBackground(Color.BLACK);
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
         inputPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.WHITE));
 
+        // Define a text field for our new JPanel
         inputField = new JTextField();
         inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         inputField.setBackground(Color.DARK_GRAY);
@@ -61,10 +75,12 @@ public final class GameWindow extends JFrame {
         inputField.setCaretColor(Color.WHITE);
         inputField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 
+        // define our buttons
         sendButton = createButton("Send");
         sceneButton = createButton("Scene");
         inventoryButton = createButton("Inventory");
 
+        // add our objects to input panel
         inputPanel.add(inputField);
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
         inputPanel.add(sendButton);
@@ -72,9 +88,10 @@ public final class GameWindow extends JFrame {
         inputPanel.add(sceneButton);
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
         inputPanel.add(inventoryButton);
+        // add the input panel to main
         main.add(inputPanel, BorderLayout.SOUTH);
 
-        // ---- Event wiring ------------------------------------------------
+        // This defines our send listener for inputted text. If line isn't empty, send it to the input queue to be consumed if applicable.
         ActionListener send = e -> {
             String line = inputField.getText().trim();
             if (!line.isEmpty()) {
@@ -82,15 +99,19 @@ public final class GameWindow extends JFrame {
                 inputField.setText("");
             }
         };
+        // on send button press offer input
         sendButton.addActionListener(send);
+        // on enter offer input
         inputField.addActionListener(send);
-
+        // Defines a action listener for the sceneButton, and when pressed it either hides, or unhides the
+        // scene history window.
         sceneButton.addActionListener(e -> {
             SceneWindow w = Scene.getWindow();
             if (w != null) w.setVisible(!w.isVisible());
             else GameEngine.red_chat_output("SceneWindow not initialized");
         });
-
+        // Defines a action listener for the inventoryButton, and when pressed it either hides, or unhides the
+        // inventory window.
         inventoryButton.addActionListener(e -> {
             InventoryWindow w = Inventory.getWindow();
             if (w != null) w.setVisible(!w.isVisible());
@@ -104,7 +125,7 @@ public final class GameWindow extends JFrame {
             }
         });
     }
-
+    // basic helper function to ensure buttons we create are all of similar style.
     private JButton createButton(String text) {
         JButton b = new JButton(text);
         b.setFocusPainted(false);
@@ -113,12 +134,16 @@ public final class GameWindow extends JFrame {
         return b;
     }
 
-    // Called by {@link ChatWindow}
+    // Called by ChatWindow to insert a line into our game window.
     void appendChat(Color color, String text) {
         SwingUtilities.invokeLater(() -> {
+            // get current logPanes styled document, and assign it to doc
             StyledDocument doc = logPane.getStyledDocument();
+            // define a new style
             Style style = logPane.addStyle("color", null);
+            // set foreground style and color.
             StyleConstants.setForeground(style, color);
+            // try and insert text into doc at its last index, if error catch it and print to stack trace for debugging.
             try {
                 doc.insertString(doc.getLength(), text + "\n", style);
                 logPane.setCaretPosition(doc.getLength());

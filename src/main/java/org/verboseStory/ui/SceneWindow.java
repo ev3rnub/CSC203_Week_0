@@ -5,11 +5,11 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Separate, scrollable window that displays scene history text.
- */
+//NOTE: see GameWindow.Java comments for detailed comments, it mostly duplicates most of the code.
+// Future ME: Refactor a general window class to construct windows accordingly.
+//define a class that extends from a jframe called SceneWindow
 public final class SceneWindow extends JFrame {
-
+//    define a text pane and a blocking queue of type strings
     private final JTextPane scenePane;
     private final BlockingQueue<String> sceneQueue;
 

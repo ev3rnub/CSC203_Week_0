@@ -1,10 +1,10 @@
 package org.verboseStory.api;
 
-import com.google.gson.*;
-import org.jetbrains.annotations.NotNull;
+// my classes
 import org.verboseStory.engine.GameEngine;
 import org.verboseStory.engine.GameEngineStaticHolder;
 
+//std
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.*;
@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Very thin wrapper around the xAI “grok‑3” HTTP endpoint.
- * All network I/O lives here – the rest of the code never talks
- * to `HttpClient` directly.
- */
+//Ext
+import com.google.gson.*;
+
+//NOTE: For detailed comments, see LocalOllama_API.java files comments.
+// Grok-3 xAI api connector
 public final class Xai_Api {
 
     private static final String API_BASE_URL = "https://api.x.ai/v1";
     private static final String MODEL = "grok-3";
 
-    /** Holds the last N messages to preserve context. */
+    //Holds the last N messages to preserve context.
     private static final List<JsonObject> messages = new ArrayList<>();
 
-    /** Public entry point used by {@link GameEngine}. */
+    //Public entry point used by GameEngine
     public static void invokeResponseFromGrok(String initialPrompt) {
         String apiKey = System.getenv("xAI_API_KEY");
         if (apiKey == null || apiKey.isBlank()) {
@@ -59,7 +59,7 @@ public final class Xai_Api {
                 messages.add(assistant);
             }
 
-            // ---- Main loop ------------------------------------------------
+            // Main Game loop.
             while (GameEngine.STARTED) {
                 BlockingQueue<String> q = GameEngineStaticHolder.engine.inputQueue;
                 String userInput = q.take(); // blocks
@@ -78,8 +78,8 @@ public final class Xai_Api {
                 messages.add(userMsg);
 
                 String resp = sendRequest(client, gson, apiKey);
-                GameEngine.white_chat_output("********** StoryMaster **********");
-                GameEngine.white_chat_output(resp);
+                GameEngine.cyan_chat_output("********** StoryMaster **********");
+                GameEngine.cyan_chat_output(resp);
                 JsonObject assistantMsg = new JsonObject();
                 assistantMsg.addProperty("role", "assistant");
                 assistantMsg.addProperty("content", resp);
@@ -127,7 +127,6 @@ public final class Xai_Api {
 
     // System prompt
     // WIP: Refactor to FileRead.
-    @NotNull
     private static String buildSysInstruct() {
         StringBuilder sb = new StringBuilder();
         sb.append("You are a Subject Matter Expert on Story telling and are considered a Story Master (SM) for a text-only, turn-based role-playing adventure game. Your job is to narrate the world (using the World Knowledge below), present choices, resolve ALL actions with random range 0-100 rolls and keep track of player stats, inventory, hit points, and story progression. Always start the player in a newly built massive space station called SunHome13.\n")
@@ -199,10 +198,7 @@ public final class Xai_Api {
                 .append(" d. Ask the player for their Character Class.\n")
                 .append(" e. Ask the player for their Character Race.\n")
                 .append(" f. Present the player with a backstory from the world details.\n")
-                .append(" i. Start the players according to their races typical geolocation on Arin.\n")
-                .append(" ii. Start the players in a scene of a vivid dream, where they have to make a choice between two choices. The choices should be neutral in nature where the player can't tell the difference between the two in regards to negative or positive.\n")
-                .append(" 1. If they choose a positive choice, start them in a positive situation, just leaving home, in a city or villiage etc.\n")
-                .append(" 2. If they choose a negative choice, start them in a negative situation, an ambush while traveling, in a jail cell in a city or boat etc.\n")
+                .append(" i. Start ALL players in a Shuttle on the way to SunHome13 SpaceStation, about to be docked.\n")
                 .append(" WORLD KNOWLEDGE:\n")
                 .append(" World Description:\n")
                 .append(" The world name is Arin is the fourth planet in the solar system named Kilan, located in the local cluster which is called Yanard’s Cluster. Arin has 4 moons 3 unnamed, 1 named, and 1 newly built massive space station called SunHome13, the first of its kind. The 1st moon is called Kata. The other 3 moons have not been discovered yet. The other planets are currently undiscovered. However there are 11 other planets and 2 astroid belts.\n")

@@ -1,6 +1,6 @@
 Course: CSC203
 Author: Chad Verbus
-Date: Nov 08, 2025
+Date: Nov 09, 2025
 
 
 ⚠️ Working Document – This README is a living document that will be updated throughout the semester as new topics, assignments, and resources become available.  
@@ -18,3 +18,7 @@ Date: Nov 08, 2025
 * 3. Modified Color theme.
 * 4. Added a local LLM class for a local ollama instance.
 * 5. Updated readme.md
+
+## 11/09/2025
+* 1. Fixed system instructions, reformated comments and added more comments, removed magenta and added cyan. Removed old code, no longer being used.
+* 2. Updated readme.md
