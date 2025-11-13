@@ -1,13 +1,31 @@
 package org.verboseStory.engine;
 
 // my classes
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import org.verboseStory.ui.Game;
+import org.verboseStory.ui.GameWindow;
 import org.verboseStory.ui.Scene;
 import org.verboseStory.ui.Inventory;
 import org.verboseStory.api.Xai_Api;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+
 import static org.verboseStory.ui.Game.updateChatWindow;
 
 // std
 import java.awt.Color;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.concurrent.BlockingQueue;
 
 //My simple game engine. It displays the title, and generates the welcome text that follows. It also receives player input from the UI via and sends to the XAI API to be processed.
@@ -96,10 +114,35 @@ public final class GameEngine {
         }
     }
 
-    public void class SaveGame extends Thread {
-        String playerKey;
-        String playerPhrase;
+    public static void SaveGame() {
+        GameEngine.cyan_chat_output("Saving Game...\n");
+        final Path SAVE_FILE = Path.of("savegame.json");
+        // get current logPanes styled document, and assign it to doc
+        GameWindow window = Game.getWindow();
+        StyledDocument doc = window.logPane.getStyledDocument();
+        try {
+            String rawDocText = doc.getText(0, doc.getLength());
+            JsonObject playerDoc = new JsonObject();
+            playerDoc.addProperty("player", playerKey);
+            playerDoc.addProperty("playerPhrase", playerPhrase);
+            playerDoc.addProperty("playerQuestion", "What is your account name?");
+            playerDoc.addProperty("playerDoc",  rawDocText);
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .disableHtmlEscaping()
+                    .create();
+            try {
+                Path playerDoc1 = Files.writeString(SAVE_FILE, gson.toJson(playerDoc));
+                System.out.println(SAVE_FILE.toString());
+                System.out.println(gson.toJson(playerDoc));
+                System.out.println("Saved File " + playerDoc1.toString());
+            } catch (IOException e) {
+                System.out.println(e);
+            }
 
+        } catch (BadLocationException e) {
+            throw new RuntimeException(e);
+        }
     }
     // this invokes our LLM API, default is remote. #FutureRefactor
     public void dialog_start() {

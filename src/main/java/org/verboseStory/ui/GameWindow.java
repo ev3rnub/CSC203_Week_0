@@ -17,7 +17,7 @@ import org.verboseStory.ui.Note;
 // a method to append chat to our game window.
 public final class GameWindow extends JFrame {
     // JtextPane is a text component that can be marked up with attributes that are represented graphically.
-    private final JTextPane logPane;
+    public final JTextPane logPane;
     // JTextField is a lightweight component that allows the editing of a single line of text. Its our input.
     private final JTextField inputField;
     // buttons
@@ -129,6 +129,7 @@ public final class GameWindow extends JFrame {
         ActionListener saveGame = e -> {
             if (saveGameButton.getText().equals("Save Game")) {
                 GameEngine.SaveGame();
+                GameEngine.cyan_chat_output("Finished Saving Game\n");
             }
         };
         // on send button press offer input
@@ -136,7 +137,7 @@ public final class GameWindow extends JFrame {
         // on enter offer input
         inputField.addActionListener(send);
         stopMusicButton.addActionListener(stopMusic);
-        saveGameButton.addActionListener(saveGame)
+        saveGameButton.addActionListener(saveGame);
         // Defines a action listener for the sceneButton, and when pressed it either hides, or unhides the
         // scene history window.
         sceneButton.addActionListener(e -> {
@@ -157,12 +158,6 @@ public final class GameWindow extends JFrame {
             if (w != null) w.setVisible(!w.isVisible());
             else GameEngine.red_chat_output("NoteWindow not initialized");
         });
-
-        saveGameButton.addActionListener(e -> {
-            if (saveGameButton.getText().equals("Save Game")) {
-                GameEngine.SaveGame();
-            }
-        })
         // Auto‑focus the input field when the window appears.
         addWindowListener(new WindowAdapter() {
             @Override public void windowOpened(WindowEvent e) {

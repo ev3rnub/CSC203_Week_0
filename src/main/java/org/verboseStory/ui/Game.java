@@ -12,6 +12,8 @@ public final class Game {
     private static GameWindow window;
     // stores reference for our game window
     public static void setWindow(GameWindow w) { window = w; }
+    // getter
+    public static GameWindow getWindow() { return window; }
     // this class appends some message to our output queue. Then passes the message to RegexEngine to be parsed.
     public static void updateChatWindow(Color color, String message) {
         if (window != null) {

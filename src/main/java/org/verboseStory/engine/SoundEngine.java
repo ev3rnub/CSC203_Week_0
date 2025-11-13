@@ -10,15 +10,15 @@ import java.io.IOException;
 public class SoundEngine {
 
     static Clip someClip = null;
-
+    static AudioInputStream audioInputStream = null;
     public void run() {
                 try {
-                    File audioFile = new File("src/main/resources/sound/music/tickTock.wav");
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+                    File audioFile = new File("src/main/resources/sound/music/tickTock_8b.wav");
+                    audioInputStream = AudioSystem.getAudioInputStream(audioFile);
                     someClip = AudioSystem.getClip();
                     someClip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the audio continuously
-                    someClip.open(audioInputStream); // open/play the audio
-
+                    someClip.open(audioInputStream); // open the audio
+                    someClip.start();
                     // Keep the program alive to allow the audio to play
                     //Thread.sleep(Long.MAX_VALUE);
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -44,6 +44,8 @@ public class SoundEngine {
     }
 
     public static void playMusic() {
-        someClip.start();
+        if (!someClip.isRunning()){
+            someClip.start();
+        }
     }
 }

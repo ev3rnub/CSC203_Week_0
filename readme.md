@@ -27,3 +27,12 @@ Date: Nov 09, 2025
 * 1. Added a Note button, and window.
 * 2. Added a basic note system.
 * 3. Experimented with sound. Added temp background music and a button to toggle music.
+
+## 11/13/2025
+### Fixed/Added
+* 1. Added SaveGame functionality to GameEngine.
+* 2. Converted music .wav file to 8bit to reduce filesize for github restriction.
+### ToDo
+* 1. Load game functionality
+* 2. WILL Fix MUSIC issue, Music doesn't automatically play.
+* 3. WILL Update readme.md.
