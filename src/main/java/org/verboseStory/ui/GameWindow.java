@@ -2,13 +2,16 @@ package org.verboseStory.ui;
 
 //my classes
 import org.verboseStory.engine.GameEngine;
-
+import org.verboseStory.engine.SoundEngine;
 //std
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.concurrent.BlockingQueue;
+
+import org.verboseStory.engine.SoundEngine;
+import org.verboseStory.ui.Note;
 
 //main game window and the input controls/buttons, window title and provides
 // a method to append chat to our game window.
@@ -21,6 +24,8 @@ public final class GameWindow extends JFrame {
     private final JButton sendButton;
     private final JButton sceneButton;
     private final JButton inventoryButton;
+    private final JButton noteButton;
+    private final JButton stopMusicButton;
     // this creates the queue we use to move messages from the user, and from the game engine to the UI. This allows
     // the engine to block when we take from the queue.
     private final BlockingQueue<String> inputQueue;
@@ -61,7 +66,7 @@ public final class GameWindow extends JFrame {
         //add it to our main
         main.add(scroll, BorderLayout.CENTER);
 
-        // Instance a new JPanel
+        // Instance a new JPanel for text input
         JPanel inputPanel = new JPanel();
         inputPanel.setBackground(Color.BLACK);
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
@@ -70,15 +75,17 @@ public final class GameWindow extends JFrame {
         // Define a text field for our new JPanel
         inputField = new JTextField();
         inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        inputField.setBackground(Color.DARK_GRAY);
-        inputField.setForeground(Color.WHITE);
-        inputField.setCaretColor(Color.WHITE);
-        inputField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+        inputField.setBackground(Color.BLACK);
+        inputField.setForeground(Color.CYAN);
+        inputField.setCaretColor(Color.CYAN);
+        inputField.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
 
         // define our buttons
         sendButton = createButton("Send");
         sceneButton = createButton("Scene");
         inventoryButton = createButton("Inventory");
+        noteButton = createButton("Note");
+        stopMusicButton = createButton("Stop Music");
 
         // add our objects to input panel
         inputPanel.add(inputField);
@@ -88,6 +95,10 @@ public final class GameWindow extends JFrame {
         inputPanel.add(sceneButton);
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
         inputPanel.add(inventoryButton);
+        inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
+        inputPanel.add(noteButton);
+        inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
+        inputPanel.add(stopMusicButton);
         // add the input panel to main
         main.add(inputPanel, BorderLayout.SOUTH);
 
@@ -99,10 +110,22 @@ public final class GameWindow extends JFrame {
                 inputField.setText("");
             }
         };
+
+        ActionListener stopMusic = e -> {
+            if (stopMusicButton.getText().equals("Stop Music")) {
+                SoundEngine.stopMusic();
+                stopMusicButton.setText("Play Music");
+            }  else {
+                SoundEngine.playMusic();
+                stopMusicButton.setText("Stop Music");
+            }
+
+        };
         // on send button press offer input
         sendButton.addActionListener(send);
         // on enter offer input
         inputField.addActionListener(send);
+        stopMusicButton.addActionListener(stopMusic);
         // Defines a action listener for the sceneButton, and when pressed it either hides, or unhides the
         // scene history window.
         sceneButton.addActionListener(e -> {
@@ -116,6 +139,12 @@ public final class GameWindow extends JFrame {
             InventoryWindow w = Inventory.getWindow();
             if (w != null) w.setVisible(!w.isVisible());
             else GameEngine.red_chat_output("InventoryWindow not initialized");
+        });
+        // defines a action listener for noteBurtron and when pressed it either hides or unhides the note window.
+        noteButton.addActionListener(e -> {
+            NoteWindow w = Note.getWindow();
+            if (w != null) w.setVisible(!w.isVisible());
+            else GameEngine.red_chat_output("NoteWindow not initialized");
         });
 
         // Auto‑focus the input field when the window appears.

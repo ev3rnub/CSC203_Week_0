@@ -22,3 +22,8 @@ Date: Nov 09, 2025
 ## 11/09/2025
 * 1. Fixed system instructions, reformated comments and added more comments, removed magenta and added cyan. Removed old code, no longer being used.
 * 2. Updated readme.md
+
+## 11/12/2025
+* 1. Added a Note button, and window.
+* 2. Added a basic note system.
+* 3. Experimented with sound. Added temp background music and a button to toggle music.

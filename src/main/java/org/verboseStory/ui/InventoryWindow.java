@@ -14,7 +14,7 @@ public final class InventoryWindow extends JFrame {
     private final BlockingQueue<String> inventoryQueue;
 
     public InventoryWindow(BlockingQueue<String> inventoryQueue, String titleSuffix) {
-        super("Verbose Hominid v0.0.1: " + titleSuffix);
+        super("Verbose Hominid v0.0.4: " + titleSuffix);
         this.inventoryQueue = inventoryQueue;
 
         setSize(680, 420);

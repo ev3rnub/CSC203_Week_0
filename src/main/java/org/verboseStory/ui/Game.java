@@ -8,7 +8,7 @@ import java.awt.Color;
 /**
  * A tiny connector that forwards messages to the GameWindow.
  */
-public final class ChatWindow {
+public final class Game {
     private static GameWindow window;
     // stores reference for our game window
     public static void setWindow(GameWindow w) { window = w; }

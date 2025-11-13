@@ -14,7 +14,7 @@ public final class SceneWindow extends JFrame {
     private final BlockingQueue<String> sceneQueue;
 
     public SceneWindow(BlockingQueue<String> sceneQueue) {
-        super("Verbose Hominid v0.0.1: SCENE History");
+        super("Verbose Hominid v0.0.4: Scene History");
         this.sceneQueue = sceneQueue;
 
         setSize(680, 420);

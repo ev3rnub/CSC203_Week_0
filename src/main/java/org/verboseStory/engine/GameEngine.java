@@ -1,11 +1,10 @@
 package org.verboseStory.engine;
 
 // my classes
-import org.verboseStory.api.LocalOllama_API; // Future use
 import org.verboseStory.ui.Scene;
 import org.verboseStory.ui.Inventory;
 import org.verboseStory.api.Xai_Api;
-import static org.verboseStory.ui.ChatWindow.updateChatWindow;
+import static org.verboseStory.ui.Game.updateChatWindow;
 
 // std
 import java.awt.Color;
@@ -61,11 +60,19 @@ public final class GameEngine {
                 cyan_title aTitle = new cyan_title();
                 aTitle.printAsciiArt();
                 white_chat_output("Welcome to Verbose Hominid: Sunhome13 (VHSH13), a Science Fiction/Fantasy text based adventure in a fictional hominid world! Work-In-Progress");
+                cyan_chat_output("\n\n");
+                cyan_chat_output("************* Note Board **************");
                 green_chat_output("Note0: There is currently no in game music, use your favorite non vocal music playlist.");
                 green_chat_output("Note1: Account and account Phrase is placeholder, so enter what you will");
-                green_chat_output("Note2: You can use your words instead of using the options given. Use your imagination.");
-                green_chat_output("Note3: A xAI api key is required, VHSH13 looks for environmental variable xAI_API_KEY.");
+                green_chat_output("Note2: A xAI api key is required, VHSH13 looks for environmental variable xAI_API_KEY.");
+                green_chat_output("Note3: You can use your words instead of using the options given. Use your imagination.");
+                green_chat_output("Note4: If you want to command the Story Master use, Command: What is currently in my inventory.");
+                green_chat_output("Note5: If you want to question the Story Master use, Question: Where am I, what time is it in the world?");
+                cyan_chat_output("\n\n");
+                cyan_chat_output("************* Notice Board **************");
+                green_chat_output("NOTICE: No save as of yet, and I've not tested long enough to determine if everything works.");
                 white_chat_output("\n\n");
+                cyan_chat_output("************* INPUT Required *************");
                 white_chat_output("Enter an Account Name, this will be used to access your session.");
                 String keyWord = readLine();
                 cyan_chat_output("Your Account Name is: " + keyWord);
