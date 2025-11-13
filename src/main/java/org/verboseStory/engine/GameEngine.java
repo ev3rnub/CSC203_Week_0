@@ -10,7 +10,7 @@ import static org.verboseStory.ui.Game.updateChatWindow;
 import java.awt.Color;
 import java.util.concurrent.BlockingQueue;
 
-//My simple game engine. It displays the title, and generates the welcome text that follows. It also receives player input from the UI via and sends to the XAI API to be processed. .
+//My simple game engine. It displays the title, and generates the welcome text that follows. It also receives player input from the UI via and sends to the XAI API to be processed.
 
 public final class GameEngine {
 
@@ -96,6 +96,11 @@ public final class GameEngine {
         }
     }
 
+    public void class SaveGame extends Thread {
+        String playerKey;
+        String playerPhrase;
+
+    }
     // this invokes our LLM API, default is remote. #FutureRefactor
     public void dialog_start() {
         Xai_Api.invokeResponseFromGrok("BEGIN_GAME"); // REMOTE DEFAULT: XAI API
