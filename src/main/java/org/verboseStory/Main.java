@@ -1,12 +1,10 @@
 // namespace
 package org.verboseStory;
-
 // my classes
 import org.verboseStory.engine.GameEngine; //logic, api connector
 import org.verboseStory.engine.GameEngineStaticHolder; // reference
 import org.verboseStory.engine.SoundEngine;
 import org.verboseStory.ui.*;
-
 // import swing libraries along with concurrency utilities.
 import javax.swing.*;
 import java.util.concurrent.BlockingQueue;
@@ -47,7 +45,6 @@ public class Main {
             GameEngine engine = new GameEngine(queue);
             // a reference so that any other part of my code can interact with GameEngine without passing it around.
             GameEngineStaticHolder.engine = engine;
-
             // instance background music
             SoundEngine soundEngine = new SoundEngine();
             // spawn new separate thread for sound.

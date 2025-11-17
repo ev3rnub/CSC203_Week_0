@@ -1,5 +1,6 @@
 package org.verboseStory.engine;
-import java.io.File;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,8 +14,12 @@ public class SoundEngine {
     static AudioInputStream audioInputStream = null;
     public void run() {
                 try {
-                    File audioFile = new File("src/main/resources/sound/music/tickTock_8b.wav");
-                    audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+                    InputStream audioStream = getClass().getResourceAsStream("/sound/music/tickTock_8b.wav");
+                    if (audioStream == null) {
+                        throw new IOException("Audio file not found in resources");
+                    }
+                    BufferedInputStream bufferedStream = new BufferedInputStream(audioStream);
+                    audioInputStream = AudioSystem.getAudioInputStream(bufferedStream);
                     someClip = AudioSystem.getClip();
                     someClip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the audio continuously
                     someClip.open(audioInputStream); // open the audio
@@ -44,8 +49,10 @@ public class SoundEngine {
     }
 
     public static void playMusic() {
-        if (!someClip.isRunning()){
-            someClip.start();
+        if (someClip != null) {
+            if (!someClip.isRunning()){
+                someClip.start();
+            }
         }
     }
 }

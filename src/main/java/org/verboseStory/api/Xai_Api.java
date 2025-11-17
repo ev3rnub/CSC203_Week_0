@@ -23,7 +23,7 @@ public final class Xai_Api {
     private static final String MODEL = "grok-3";
 
     //Holds the last N messages to preserve context.
-    private static final List<JsonObject> messages = new ArrayList<>();
+    public static List<JsonObject> messages = new ArrayList<>();
 
     //Public entry point used by GameEngine
     public static void invokeResponseFromGrok(String initialPrompt) {
@@ -102,6 +102,7 @@ public final class Xai_Api {
         for (int i = start; i < messages.size(); i++) {
             msgs.add(messages.get(i));
         }
+
         body.add("messages", msgs);
         body.addProperty("max_tokens", 20000);
         body.addProperty("temperature", 0.5);

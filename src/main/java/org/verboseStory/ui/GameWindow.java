@@ -1,6 +1,10 @@
 package org.verboseStory.ui;
 
 //my classes
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import org.verboseStory.api.Xai_Api;
 import org.verboseStory.engine.GameEngine;
 import org.verboseStory.engine.SoundEngine;
 //std
@@ -8,6 +12,9 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 import org.verboseStory.engine.SoundEngine;
@@ -26,7 +33,6 @@ public final class GameWindow extends JFrame {
     private final JButton inventoryButton;
     private final JButton noteButton;
     private final JButton stopMusicButton;
-    private final JButton saveGameButton;
     // this creates the queue we use to move messages from the user, and from the game engine to the UI. This allows
     // the engine to block when we take from the queue.
     private final BlockingQueue<String> inputQueue;
@@ -87,7 +93,6 @@ public final class GameWindow extends JFrame {
         inventoryButton = createButton("Inventory");
         noteButton = createButton("Note");
         stopMusicButton = createButton("Stop Music");
-        saveGameButton = createButton("Save Game");
 
         // add our objects to input panel
         inputPanel.add(inputField);
@@ -101,8 +106,6 @@ public final class GameWindow extends JFrame {
         inputPanel.add(noteButton);
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
         inputPanel.add(stopMusicButton);
-        inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
-        inputPanel.add(saveGameButton);
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
         // add the input panel to main
         main.add(inputPanel, BorderLayout.SOUTH);
@@ -126,18 +129,12 @@ public final class GameWindow extends JFrame {
                 stopMusicButton.setText("Stop Music");
             }
         };
-        ActionListener saveGame = e -> {
-            if (saveGameButton.getText().equals("Save Game")) {
-                GameEngine.SaveGame();
-                GameEngine.cyan_chat_output("Finished Saving Game\n");
-            }
-        };
+
         // on send button press offer input
         sendButton.addActionListener(send);
         // on enter offer input
         inputField.addActionListener(send);
         stopMusicButton.addActionListener(stopMusic);
-        saveGameButton.addActionListener(saveGame);
         // Defines a action listener for the sceneButton, and when pressed it either hides, or unhides the
         // scene history window.
         sceneButton.addActionListener(e -> {

@@ -1,9 +1,7 @@
 package org.verboseStory.engine;
 
 // my classes
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import org.verboseStory.ui.Game;
 import org.verboseStory.ui.GameWindow;
 import org.verboseStory.ui.Scene;
@@ -17,15 +15,18 @@ import javax.swing.text.StyledDocument;
 import static org.verboseStory.ui.Game.updateChatWindow;
 
 // std
-import java.awt.Color;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 //My simple game engine. It displays the title, and generates the welcome text that follows. It also receives player input from the UI via and sends to the XAI API to be processed.
@@ -38,7 +39,6 @@ public final class GameEngine {
     public static volatile String playerPhrase = "";
     // our input queue
     public final BlockingQueue<String> inputQueue;
-
     public GameEngine(BlockingQueue<String> inputQueue) {
         this.inputQueue = inputQueue;
     }
@@ -52,11 +52,10 @@ public final class GameEngine {
     public void run() {
         try {
             get_key_word("welcome"); //displays welcome text
-            dialog_start(); // starts player game/interaction
         } catch (Exception e) {
-            red_chat_output("UNHANDLED EXCEPTION: " + e);
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+        dialog_start(); // starts player game/interaction
     }
 //    TITLE text in ascii art #FutureRefactor
     public class cyan_title {
@@ -114,36 +113,6 @@ public final class GameEngine {
         }
     }
 
-    public static void SaveGame() {
-        GameEngine.cyan_chat_output("Saving Game...\n");
-        final Path SAVE_FILE = Path.of("savegame.json");
-        // get current logPanes styled document, and assign it to doc
-        GameWindow window = Game.getWindow();
-        StyledDocument doc = window.logPane.getStyledDocument();
-        try {
-            String rawDocText = doc.getText(0, doc.getLength());
-            JsonObject playerDoc = new JsonObject();
-            playerDoc.addProperty("player", playerKey);
-            playerDoc.addProperty("playerPhrase", playerPhrase);
-            playerDoc.addProperty("playerQuestion", "What is your account name?");
-            playerDoc.addProperty("playerDoc",  rawDocText);
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .disableHtmlEscaping()
-                    .create();
-            try {
-                Path playerDoc1 = Files.writeString(SAVE_FILE, gson.toJson(playerDoc));
-                System.out.println(SAVE_FILE.toString());
-                System.out.println(gson.toJson(playerDoc));
-                System.out.println("Saved File " + playerDoc1.toString());
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-
-        } catch (BadLocationException e) {
-            throw new RuntimeException(e);
-        }
-    }
     // this invokes our LLM API, default is remote. #FutureRefactor
     public void dialog_start() {
         Xai_Api.invokeResponseFromGrok("BEGIN_GAME"); // REMOTE DEFAULT: XAI API
