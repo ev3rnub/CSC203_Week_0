@@ -2,6 +2,14 @@ Course: CSC203
 Author: Chad Verbus
 Date: Nov 09, 2025
 
+## Description:
+    VerboseHominid:Starbase 13 is a single player SciFi/Fantasy text based simulation/rpg. At its current state, its essentially a
+    prototype chat interface to see if it would work and be fun, surprisingly it turned out to be fun.
+
+## Requirements:
+    OpenJDK 25+
+    MacOS (Note: I'm learning Java, I've had mixed results with getting VerboseHominid to run on other macs.)
+    xAI API Key
 
 ⚠️ Working Document – This README is a living document that will be updated throughout the semester as new topics, assignments, and resources become available.  
 
