@@ -10,8 +10,11 @@ import java.io.IOException;
 
 public class SoundEngine {
 
-    static Clip someClip = null;
-    static AudioInputStream audioInputStream = null;
+    private static long currentFrameTime = 0;
+    private static long startFrameTime = 0;
+    private static Clip someClip = null;
+    private static AudioInputStream audioInputStream = null;
+
     public void run() {
                 try {
                     InputStream audioStream = getClass().getResourceAsStream("/sound/music/tickTock_8b.wav");
@@ -21,11 +24,9 @@ public class SoundEngine {
                     BufferedInputStream bufferedStream = new BufferedInputStream(audioStream);
                     audioInputStream = AudioSystem.getAudioInputStream(bufferedStream);
                     someClip = AudioSystem.getClip();
+                    someClip.open(audioInputStream);
                     someClip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the audio continuously
-                    someClip.open(audioInputStream); // open the audio
                     someClip.start();
-                    // Keep the program alive to allow the audio to play
-                    //Thread.sleep(Long.MAX_VALUE);
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                     e.printStackTrace();
                 }
@@ -35,24 +36,26 @@ public class SoundEngine {
         if (someClip != null) {
             if (someClip.isRunning()){
                 someClip.stop();
+                currentFrameTime = someClip.getFramePosition();
             }
         }
     }
 
-    public static void endMusic() {
+    public static void shutdown() {
         if (someClip != null) {
             if (someClip.isRunning()){
                 someClip.stop();
                 someClip.close();
             }
+            someClip = null;
         }
     }
 
     public static void playMusic() {
-        if (someClip != null) {
-            if (!someClip.isRunning()){
-                someClip.start();
-            }
+        if (someClip != null && !someClip.isRunning()) {
+            someClip.setFramePosition(aMiliscond);
+            someClip.loop(Clip.LOOP_CONTINUOUSLY);
+            someClip.start();
         }
     }
 }

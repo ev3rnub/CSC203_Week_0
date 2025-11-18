@@ -119,22 +119,22 @@ public final class GameEngine {
         //LocalOllama_API.invokeResponseFromLocal("BEGIN_GAME"); // LOCAL: Local Ollama instance
     }
 
-    //methods to define color output to game windows. #FutureRefactor
+    //methods to define color output to game windows.
     public static void blue_chat_output(String s)   { updateChatWindow(Color.BLUE,   s); }
     public static void red_chat_output(String s)    { updateChatWindow(Color.RED,    s); }
     public static void green_chat_output(String s)  { updateChatWindow(Color.GREEN,  s); }
     public static void white_chat_output(String s)  { updateChatWindow(Color.WHITE,  s); }
-    public static void cyan_chat_output(String s){ updateChatWindow(Color.CYAN,   s); }
+    public static void cyan_chat_output(String s)   { updateChatWindow(Color.CYAN,   s); }
 
-    public static void blue_scene_output(String s)   { Scene.updateSceneWindow(Color.BLUE,   s); }
-    public static void red_scene_output(String s)    { Scene.updateSceneWindow(Color.RED,    s); }
-    public static void green_scene_output(String s)  { Scene.updateSceneWindow(Color.GREEN,  s); }
-    public static void white_scene_output(String s)  { Scene.updateSceneWindow(Color.WHITE,  s); }
-    public static void cyan_scene_output(String s){ Scene.updateSceneWindow(Color.CYAN,s); }
+    public static void blue_scene_output(String s)  { Scene.updateSceneWindow(Color.BLUE,   s); }
+    public static void red_scene_output(String s)   { Scene.updateSceneWindow(Color.RED,    s); }
+    public static void green_scene_output(String s) { Scene.updateSceneWindow(Color.GREEN,  s); }
+    public static void white_scene_output(String s) { Scene.updateSceneWindow(Color.WHITE,  s); }
+    public static void cyan_scene_output(String s)  { Scene.updateSceneWindow(Color.CYAN,   s); }
 
-    public static void blue_inventory_output(String s)   { Inventory.updateInventoryWindow(Color.BLUE,   s); }
-    public static void red_inventory_output(String s)    { Inventory.updateInventoryWindow(Color.RED,    s); }
-    public static void green_inventory_output(String s)  { Inventory.updateInventoryWindow(Color.GREEN,  s); }
-    public static void white_inventory_output(String s)  { Inventory.updateInventoryWindow(Color.WHITE,  s); }
-    public static void cyan_inventory_output(String s){ Inventory.updateInventoryWindow(Color.CYAN,s); }
+    public static void blue_inventory_output(String s)  { Inventory.updateInventoryWindow(Color.BLUE,   s); }
+    public static void red_inventory_output(String s)   { Inventory.updateInventoryWindow(Color.RED,    s); }
+    public static void green_inventory_output(String s) { Inventory.updateInventoryWindow(Color.GREEN,  s); }
+    public static void white_inventory_output(String s) { Inventory.updateInventoryWindow(Color.WHITE,  s); }
+    public static void cyan_inventory_output(String s)  { Inventory.updateInventoryWindow(Color.CYAN,   s); }
 }

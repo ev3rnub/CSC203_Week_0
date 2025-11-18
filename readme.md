@@ -32,7 +32,9 @@ Date: Nov 09, 2025
 ### Fixed/Added
 * 1. Added SaveGame functionality to GameEngine.
 * 2. Converted music .wav file to 8bit to reduce filesize for github restriction.
+## 11/15/2025
+### Paused
+* 1. Save and load functionality.
 ### ToDo
-* 1. Load game functionality
-* 2. WILL Fix MUSIC issue, Music doesn't automatically play.
-* 3. WILL Update readme.md.
+* 1. WILL Fix MUSIC issue, Music doesn't automatically loop/restart.
+* 2. WILL Update readme.md.

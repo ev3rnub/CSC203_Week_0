@@ -121,12 +121,12 @@ public final class GameWindow extends JFrame {
 
         //toggles music
         ActionListener stopMusic = e -> {
-            if (stopMusicButton.getText().equals("Stop Music")) {
+            if (stopMusicButton.getText().equals("Pause Music")) {
                 SoundEngine.stopMusic();
                 stopMusicButton.setText("Play Music");
             }  else {
                 SoundEngine.playMusic();
-                stopMusicButton.setText("Stop Music");
+                stopMusicButton.setText("Pause Music");
             }
         };
 
@@ -155,6 +155,7 @@ public final class GameWindow extends JFrame {
             if (w != null) w.setVisible(!w.isVisible());
             else GameEngine.red_chat_output("NoteWindow not initialized");
         });
+
         // Auto‑focus the input field when the window appears.
         addWindowListener(new WindowAdapter() {
             @Override public void windowOpened(WindowEvent e) {
