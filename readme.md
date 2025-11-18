@@ -35,6 +35,15 @@ Date: Nov 09, 2025
 ## 11/15/2025
 ### Paused
 * 1. Save and load functionality.
-### ToDo
-* 1. WILL Fix MUSIC issue, Music doesn't automatically loop/restart.
+## 11/16/2025
+* 1. Compiled a local version!
+## 11/18/2025
+* 1. Created Branch StarBase13_Char
+* 2. Started work on an API Analytics class.
+### ToDO:
+* 1. Define a Character class.
+* 2. Define a Item class.
+* 3. Define a LocalPlayArea class.
+### BUGs/Missing Features
+* 1. Music doesn't automatically loop/restart.
 * 2. WILL Update readme.md.
