@@ -5,6 +5,11 @@ Date: Nov 18, 2025
 ## Description:
 VerboseHominid:Starbase 13 is a single player SciFi/Fantasy text based simulation/rpg. At its current state, it's essentially a prototype chat interface to see if it would work and be fun, surprisingly it turned out to be fun.
 
+Branch Starbase13_start is the last playable build. 
+
+Starbase13 Start:
+* https://github.com/ev3rnub/CSC203_Week_0/tree/starbase13_start
+
 ## Requirements:
 * OpenJDK 25+
 * Maven
