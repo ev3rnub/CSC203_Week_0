@@ -5,7 +5,7 @@ Date: Nov 18, 2025
 ## Description:
 VerboseHominid:Starbase 13 is a single player SciFi/Fantasy text based simulation/rpg. At its current state, it's essentially a prototype chat interface to see if it would work and be fun, surprisingly it turned out to be fun.
 
-Branch Starbase13_start is the last playable build. 
+Branch Starbase13_college is the last playable build. 
 
 Starbase13 Start:
 * https://github.com/ev3rnub/CSC203_Week_0/tree/starbase13_start
@@ -55,11 +55,12 @@ Once you
 * 1. Compiled a local version!
 ## 11/18/2025
 * 1. Created Branch StarBase13_Char
-* 2. Started work on an API Analytics class.
+* 2. Started work on a Character class to further define the player character and NPCs.
 ### ToDO:
-* 1. Define a Character class.
-* 2. Define a Item class.
-* 3. Define a LocalPlayArea class.
+* 1. Define a Weather class. 
+* 2. Define a Surface class.
+* 3. Define a LocalPlayArea class to define the local area.
+* 4. Define a API Analytics tool class to track API keys, usage. 
 ### BUGs/Missing Features
 * 1. Music doesn't automatically loop/restart.
 * 2. WILL Update readme.md.

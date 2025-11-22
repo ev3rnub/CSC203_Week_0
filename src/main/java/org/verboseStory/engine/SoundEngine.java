@@ -53,7 +53,7 @@ public class SoundEngine {
 
     public static void playMusic() {
         if (someClip != null && !someClip.isRunning()) {
-            someClip.setFramePosition(aMiliscond);
+            someClip.setFramePosition(0);
             someClip.loop(Clip.LOOP_CONTINUOUSLY);
             someClip.start();
         }

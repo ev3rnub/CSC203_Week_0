@@ -1,90 +1,393 @@
 package org.verboseStory.model;
+// Chad V.
+//[ Class  | ---------Professor | ---------------------------------------Assignment Title ]
+//[ CSC203 | ------------Prof H | ----------------Object Oriented Programming Inheritance ]
+//[ Student Child Class of Character | -------------------------------------- Requirement ]
 import org.verboseStory.engine.GameEngine;
+import org.verboseStory.engine.GameEngineStaticHolder;
+import java.awt.*;
+import java.util.concurrent.BlockingQueue;
+
+/**
+ * This is my version of a "person" class.
+ *  The Character class is the base of all other "Character" classes, Professor, Student, Geomancer,
+ *  wraith, Tanic Knight, etc.
+ *  Note: some variables are defined as public for class assignment
+ *
+ *  Character someCharacter = new Character();
+ *  someCharacter.firstName = "Dora"; || *.setFirstName("Dora); || String aName = *.getFirstName()
+ *  someCharacter.lastName = "Verbose";
+ *  someCharacter.someTitle = "NPC";
+ *  someCharacter.someCharacterClass = "NPC";
+ */
+
+//Character class.
+public class Character {
+    //String firstname, lastname, title and location,
+    public String firstName;
+    public String lastName;
+    private String someTitle;
+    public String someRace;
+    public String someCharacterClass;
+    public String background;
+    private String location;
+    private int hitPoints;
+    private int manaPoints;
+    private int actionPoints;
+    private int exhaustionPoints;
+    private int strength;
+    private int stamina;
+    private int dexterity;
+    private int intelligence;
+    private int wisdom;
+    private int charisma;
+    private int creditWallet;
+
+    private enum Demeanor {
+        CALM,
+        FRIENDLY,
+        RESERVED,
+        CONFIDENT,
+        EASYGOING,
+        CHEERFUL,
+        STOIC,
+        CURIOUS,
+        ENERGETIC,
+        INTROVERTED,
+        OUTGOING,
+        COMPASSIONATE,
+        IMPULSIVE,
+        AGGRESSIVE,
+        PESSIMISTIC,
+        MOODY,
+        ANXIOUS,
+        INDIFFERENT,
+        SARCASTIC,
+        RUDE,
+        RAGE,
+    };
+
+    private List someInventory;
+
+    // Character State
+    private enum Posture {PRONE, CRAWL, CROUCH, KNEELING, SITTING, STANDING};
+    private enum Locomotion {SNEAK, WALKING, MARCHING, JOGGING, RUNNING, SPRINTING};
+    //default character states
+    public Demeanor currentDemeanor = Demeanor.CALM;
+    public Posture currentPosture = Posture.STANDING;
+    public Locomotion currentLocamotion = Locomotion.WALKING;
 
 
-public record Character (
-        String firstName,
-        String lastName,
-        String gender,
-        String race,
-        String charClass,
-        String someBackground,
-        String location,
-        String extLocation, /** external location, A city, a town-village, the central prison*/
-        String typeLocation, /** surface, underwater, air, space*/
+    /**
+     *Getters/Setters to access private var
+     * setFirstName("Aleric")
+     * String charFirstName = getFirstName();
+     * output: "Aleric"
+     * */
+    //firstname
+    //setter
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+    //getter
+    public String getFirstName(){
+        return firstName;
+    }
+    //lastName
+    //setter
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
 
-        int movementPoints,
-        int hunger,
-        int health,
-        int height,
-        int weight,
-        private int strength,
-        private int stamina,
-        private int agility,
-        private int intelligence,
-        private int charisma,
-        private int dexterity,
-        private int wisdom,
-        private int blood,
-        private int chaosPoints,
-        private int lightPoints,
-        private int darkPoints,
-        private int bodyTemp,
-        private int envTemp,
-        private String localCharEnvWeather,
-        private int headHP,
-        private int torsoHP,
-        private int leftArmHP,
-        private int rightArmHP,
-        private int leftLegHP,
-        private int rightLegHP,
-        private int leftHandHP,
-        private int rightHandHP,
-        private int leftEyeHP,
-        private int rightEyeHP
+    //getter
+    public String getLastName(){
+        return lastName;
+    }
+    //location
+    //setter
+    public void setLocation(String location){
+        this.location = location;
+    }
 
-// constructor
-    private Character(Buider someBuilder) {
-        this.firstName = someBuilder.add.firstName;
-        this.lastName = someBuilder.lastName;
-        this.gender = someBuilder.gender;
-        this.race = someBuilder.race;
-        this.charClass = someBuilder.someClass;
-        this.someBackground = someBuilder.someBackground;
-        this.location = someBuilder.location;
-        this.extLocation = someBuilder.extLocation;
-        this.typeLocation = someBuilder.typeLocation;
-        this.movementPoints = 0;
-        this.hunger = 0;
-        this.health = 0;
-        this.weight = 0;
-        this.strength = 0;
-        this.stamina = 0;
-        this.agility = 0;
-        this.intelligence = 0;
-        this.charisma = 0;
-        this.dexterity = 0;
-        this.wisdom = 0;
-        this.blood = 0;
-        this.headHP = 10;
-        this.torsoHP = 10;
-        this.leftArmHP = 10;
-        this.leftHandHP = 10;
-        this.leftEyeHP = 10;
-        this.leftLegHP = 10;
-        this.rightArmHP = 10;
-        this.rightHandHP = 10;
-        this.rightEyeHP = 10;
-        this.rightLegHP = 10;
-        this.health = 100;
-        this.bodyTemp = 98;
-        this.envTemp = 0;
-        this.localCharEnvWeather = "{Clear, Some clouds, 65f, 90%h}";
-        this.chaosPoints = 0;
-        this.lightPoints = 0;
-        this.darkPoints = 0;
-}
+    //getter
+    public String getLocation(){
+        return location;
+    }
+
+    //setter
+    public void setRace(String race){
+        this.someRace = race;
+    }
+    //race
+    //getter
+    public String getRace(){
+        return someRace;
+    }
+
+    //setter
+    public void setCharacterClass(String className){
+        this.someCharacterClass = className;
+    }
+    // character class
+    //getter
+    public String getCharacterClass(){
+        return someCharacterClass;
+    }
+    // character background
+    //setter
+    public void setBackground(String background){
+        this.background = background;
+    }
+
+    //getter
+    public String getBackground() {
+        return background;
+    }
+    // General Demeanor of the professor
+    //setter
+    public void setDemeanor(Demeanor demeanor) {
+        this.currentDemeanor = demeanor;
+    }
+    //getter
+    public String getDemeanor() {
+        return currentDemeanor.toString();
+    }
+
+    // character title
+    /**Titles will be used by the AI to role-play a character if need be.
+     * .. String someTitle = someCharacter.getTitle();
+     * .. someCharacter.setTitle("JEDI")
+     * */
+    //getter
+    public String getTitle(){
+        return someTitle;
+    }
+    //setter
+    public void setTitle(String title){
+        this.someTitle = title;
+    }
+    // character hp
+    /**Hit Points will be used by the AI to determine the health of a character.
+     * .. int hp = someCharacter.getHitPoints();
+     * .. someCharacter.setHitPoints(10)
+     * */
+    //get hp
+    public int getHitPoints(){
+        return hitPoints;
+    }
+    //define hp
+    public void setHitPoints(int hitPoints){
+        this.hitPoints = hitPoints;
+    }
+    // character MP
+    /**Mana Points will be used by the AI to restrict spell usage.
+     * .. int mp = someCharacter.getManaPoints();
+     * .. someCharacter.setManaPoints(100)
+     * */
+    public void setManaPoints(int manaPoints){
+        this.manaPoints = manaPoints;
+    }
+
+    public int getManaPoints(){
+        return manaPoints;
+    }
+
+    //exhaustionPoints
+    /**Exhaustion Points will be used by the AI to restrict Character movement, .
+     * .. int mp = someCharacter.getManaPoints();
+     * .. someCharacter.setManaPoints(100)
+     * */
+    public void setExhaustionPoints(int exhaustionPoints){
+        this.exhaustionPoints = exhaustionPoints;
+    }
+
+    public int getExhaustionPoints(){
+        return exhaustionPoints;
+    }
 
 
+    /**
+     * ActionPoints: action points are essentially the number of turns/actions a character can
+     * take before needing to rest.
+     * */
+//    actionPoints;
+    public void setActionPoints(int actionPoints){
+        this.actionPoints = actionPoints;
+    }
 
+    public int getActionPoints(){
+        return actionPoints;
+    }
+    /**
+     * Character Stats determine what the character can and can't do.
+     * */
+//    strength;
+    public void setStrength(int strength){
+        this.strength = strength;
+    }
+
+    public int getStrength(){
+        return strength;
+    }
+//    stamina;
+    public void setStamina(int stamina){
+        this.stamina = stamina;
+    }
+
+    public int getStamina(){
+        return stamina;
+    }
+//    dexterity;
+    public void setDexterity(int dexterity){
+        this.dexterity = dexterity;
+    }
+
+    public int getDexterity(){
+        return dexterity;
+    }
+//    intelligence;
+    public void setIntelligence(int intelligence){
+        this.intelligence = intelligence;
+    }
+
+    public int getIntelligence(){
+        return intelligence;
+    }
+//    wisdom;
+    public void setWisdom(int wisdom){
+        this.wisdom = wisdom;
+    }
+
+    public int getWisdom(){
+        return wisdom;
+    }
+//    charisma;
+    public void setCharisma(int charisma){
+        this.charisma = charisma;
+    }
+
+    public int getCharisma(){
+        return charisma;
+    }
+
+    //posture
+    /**
+     * Posture and Locomotion: The characters posture and type of movement.
+     *
+     * Posture somePosture = getCurrentPosture()
+     * somePosture.setPosture(Posture.SITTING)
+     *
+     * */
+    public void setPosture( Posture newPosture){
+        this.currentPosture = newPosture;
+    }
+
+    public Posture getCurrentPosture(){
+        return currentPosture;
+    }
+
+    public void setLocomotion(Locomotion newLocomotion){
+        this.currentLocamotion = newLocomotion;
+    }
+    //Inventory
+    /**
+     * An Inventory for the character. String for now, but will be a record in the future.
+     * #FUTUREME: Define an Item Record class.
+     *
+     * Append an item to the inventory
+     * someInventory.append("Necklace of the Vertonal")
+     *
+     * Get the inventory:
+     * List someInventory = getInventory()
+     *
+     * Get an Item.
+     * String someItem = someInventory[0];
+     * */
+    public void appendInventory(String someItem){
+        someInventory.add(someItem);
+    }
+
+    public List getInventory(){
+        return someInventory;
+    }
+
+    /**
+     * Character "Credit Wallet", so the character can store earned credits.
+     * */
+    public void setCreditWallet(int creditWallet){
+        this.creditWallet = creditWallet;
+    }
+
+    public int getCreditWallet(){
+        return creditWallet;
+    }
+
+    /**
+     * Character Actions; These are default character "actions" that a player has access to directly
+     * talk, sleep, sit, stand, walk, run, jog, e
+     * */
+    public void talk(){
+        StringBuilder msg = new StringBuilder();
+        msg.append(someTitle + " " + firstName + " " + lastName + " Hello");
+        GameEngine.printOutput(Color.GREEN, "Character", msg.toString());
+    }
+
+    public void rest(int hours){
+        StringBuilder msg = new StringBuilder();
+        msg.append(someTitle + " " + firstName + " " + lastName + " began sleeping")
+                .append("and is planning on sleeping for " + hours + " hours.");
+        GameEngine.printOutput(Color.GREEN, "Character", msg.toString());
+
+    }
+
+    public void sit(){
+        setPosture(
+                Posture.SITTING
+        );
+    }
+
+    public void stand(){
+        setPosture(
+                Posture.STANDING
+        );
+    }
+
+    public void startJogging(){
+        if (currentPosture != Posture.STANDING) {
+            setPosture(
+                    Posture.STANDING
+            );
+        }
+        setLocomotion(
+                Locomotion.JOGGING
+        );
+    }
+
+    public void startRunning(){
+        setLocomotion(
+                Locomotion.RUNNING
+        );
+    }
+
+    // eating
+    /**
+     * All Characters need to eat :).
+     * Placeholder for now, just prints a string that is passed to it.
+     * */
+    public void eat(String someFood){
+        StringBuilder msg = new StringBuilder();
+        msg.append(someTitle + " " + firstName + " " + lastName + " is Eating " + someFood);
+        GameEngine.printOutput(Color.GREEN, "CHARACTER", msg.toString());
+        //add food calories to digestion
+    }
+
+    // Not sure I need this, as I"ll already have a reference; Though I thought I could use it
+    // in the future to automatically pass updates through the queue, for the character sheet.
+    // update the engines input queue with a character message
+    public void updateEngine(String someUpdateMsg){
+        BlockingQueue<String> anInputQueue = GameEngineStaticHolder.engine.inputQueue;
+        if(!someUpdateMsg.isEmpty()){
+            anInputQueue.offer(someUpdateMsg);
+        }
+    }
 }

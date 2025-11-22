@@ -11,6 +11,7 @@ import java.util.concurrent.BlockingQueue;
 //main npte window and the input controls/buttons, window title and provides
 // a method to append chat to our note window.
 public final class NoteWindow extends JFrame {
+    private String NWTITLE = "NOTEWINDOW";
     // JtextPane is a text component that can be marked up with attributes that are represented graphically.
     private final JTextPane notePane;
     private final JButton saveButton;
@@ -120,7 +121,7 @@ public final class NoteWindow extends JFrame {
 
             String someNotes = notePane.getText();
             if (!someNotes.equals("")) {
-                GameEngine.green_chat_output(someNotes);
+                GameEngine.printOutput(Color.CYAN, NWTITLE, someNotes);
             }
         });
     }

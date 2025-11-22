@@ -27,6 +27,8 @@ public final class GameWindow extends JFrame {
     public final JTextPane logPane;
     // JTextField is a lightweight component that allows the editing of a single line of text. Its our input.
     private final JTextField inputField;
+    // JMenu
+    private final JMenuBar gameMenuBar;
     // buttons
     private final JButton sendButton;
     private final JButton sceneButton;
@@ -46,7 +48,7 @@ public final class GameWindow extends JFrame {
         // on close, exit completely
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         // set window size
-        setSize(1200, 780);
+        setSize(1400, 780);
         // instance a new JPanel with a new border layout
         JPanel main = new JPanel(new BorderLayout(5, 5));
         // define its background color
@@ -107,8 +109,39 @@ public final class GameWindow extends JFrame {
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
         inputPanel.add(stopMusicButton);
         inputPanel.add(Box.createRigidArea(new Dimension(8, 0)));
-        // add the input panel to main
+        // menu bar
+        // define a JMenuBar
+        gameMenuBar = new JMenuBar();
+        // create Character Menu
+        JMenu charMenu = new JMenu("Character");
+        // create menu items for character menu
+        JMenuItem charInfo = new JMenuItem("Character Info");
+        charMenu.add(charInfo);
+        // add our new menu, and menu items to our menu bar
+        gameMenuBar.add(charMenu);
+        // create about menu
+        JMenu aboutMenu = new JMenu("About");
+        // sub menu item for the about meni
+        JMenuItem devMenuItem = new JMenuItem("Dev");
+        aboutMenu.add(devMenuItem);
+        // add our new menu to the menu bar
+        gameMenuBar.add(aboutMenu);
+        // add our newly defined items to the main window
+        main.add(gameMenuBar, BorderLayout.NORTH);
         main.add(inputPanel, BorderLayout.SOUTH);
+
+        //ACTION Listeners
+        ActionListener createCharacter = e -> {
+            inputQueue.offer("CREATECHARACTER");
+        };
+
+        ActionListener listCharInfo = e ->  {
+            GameEngine.listCharacter();
+        };
+
+        ActionListener listDev = e -> {
+            inputQueue.offer("DEV");
+        };
 
         // This defines our send listener for inputted text. If line isn't empty, send it to the input queue to be consumed if applicable.
         ActionListener send = e -> {
@@ -121,12 +154,12 @@ public final class GameWindow extends JFrame {
 
         //toggles music
         ActionListener stopMusic = e -> {
-            if (stopMusicButton.getText().equals("Pause Music")) {
+            if (stopMusicButton.getText().equals("Stop Music")) {
                 SoundEngine.stopMusic();
                 stopMusicButton.setText("Play Music");
             }  else {
                 SoundEngine.playMusic();
-                stopMusicButton.setText("Pause Music");
+                stopMusicButton.setText("Stop Music");
             }
         };
 
@@ -135,25 +168,28 @@ public final class GameWindow extends JFrame {
         // on enter offer input
         inputField.addActionListener(send);
         stopMusicButton.addActionListener(stopMusic);
+        devMenuItem.addActionListener(listDev);
+        charInfo.addActionListener(listCharInfo);
+
         // Defines a action listener for the sceneButton, and when pressed it either hides, or unhides the
         // scene history window.
         sceneButton.addActionListener(e -> {
             SceneWindow w = Scene.getWindow();
             if (w != null) w.setVisible(!w.isVisible());
-            else GameEngine.red_chat_output("SceneWindow not initialized");
+            else GameEngine.printOutput(Color.RED, "GAME_WINDOW", "SceneWindow not initialized");
         });
         // Defines a action listener for the inventoryButton, and when pressed it either hides, or unhides the
         // inventory window.
         inventoryButton.addActionListener(e -> {
             InventoryWindow w = Inventory.getWindow();
             if (w != null) w.setVisible(!w.isVisible());
-            else GameEngine.red_chat_output("InventoryWindow not initialized");
+            else GameEngine.printOutput(Color.RED, "GAME_WINDOW", "InventoryWindow not initialized");
         });
         // defines a action listener for noteButton and when pressed it either hides or unhides the note window.
         noteButton.addActionListener(e -> {
             NoteWindow w = Note.getWindow();
             if (w != null) w.setVisible(!w.isVisible());
-            else GameEngine.red_chat_output("NoteWindow not initialized");
+            else GameEngine.printOutput(Color.RED, "GAME_WINDOW", "NoteWindow not initialized");
         });
 
         // Auto‑focus the input field when the window appears.
@@ -167,12 +203,12 @@ public final class GameWindow extends JFrame {
     private JButton createButton(String text) {
         JButton b = new JButton(text);
         b.setFocusPainted(false);
-        b.setBackground(new Color(0x2A2A2A));
+        b.setBackground(Color.BLACK);
         b.setForeground(Color.BLACK);
         return b;
     }
 
-    // Called by ChatWindow to insert a line into our game window.
+    // insert a line of text into our game window.
     void appendChat(Color color, String text) {
         SwingUtilities.invokeLater(() -> {
             // get current logPanes styled document, and assign it to doc
@@ -184,6 +220,7 @@ public final class GameWindow extends JFrame {
             // try and insert text into doc at its last index, if error catch it and print to stack trace for debugging.
             try {
                 doc.insertString(doc.getLength(), text + "\n", style);
+                //#FUTUREME NEED to check doc ength and purge accordingly
                 logPane.setCaretPosition(doc.getLength());
             } catch (BadLocationException ex) {
                 ex.printStackTrace();

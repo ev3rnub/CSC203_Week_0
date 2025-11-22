@@ -36,6 +36,7 @@ build/
 .vscode/
 
 ### Mac OS ###
-.DS_StoretickTock.wav
+*.wav
 .savegame.json
 *.app
+.DS_Store

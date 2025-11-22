@@ -3,6 +3,7 @@ package org.verboseStory.api;
 import org.verboseStory.engine.GameEngine;
 import org.verboseStory.engine.GameEngineStaticHolder;
 // std
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.*;
@@ -14,8 +15,8 @@ import com.google.gson.*;
 
 /** Mirrros XaiAPI
  * Model used: {@code DMVHSH13_v0:latest}
+ * Model file used: DMVHSH13_v0.modelfile
  * Endpoint   : {@code http://localhost:11434/v1/chat/completions}
- * For future use.
  */
 public final class LocalOllama_API {
 
@@ -29,77 +30,49 @@ public final class LocalOllama_API {
     private static final List<JsonObject> messages = new ArrayList<>();
 
     //Public entry point used by GameEngine.
-    public static void invokeResponseFromLocal(String initialPrompt) {
+    public static String invokeResponseFromLocal(String initialPrompt) {
         HttpClient client = HttpClient.newHttpClient();
         Gson gson = new Gson();
-        // try catch
+        String someResponse = "";
         try {
-            // if initialPrompt is equal to BEGIN_GAME, define a new json object with the variable name of init, add
-            // properties to init and then add it to the messages list. Send the request and await the response, and
-            // send the response to our game window. Create another json object, define its properties and add it to
-            // the messages list.
-            if ("BEGIN_GAME".equalsIgnoreCase(initialPrompt)) {
+            if (GameEngine.INITIAL) {
                 JsonObject init = new JsonObject();
                 init.addProperty("role", "user");
                 init.addProperty("content", initialPrompt);
                 messages.add(init);
 
-                String resp = sendRequest(client, gson);
-                GameEngine.white_chat_output("***** StoryMaster *****");
-                GameEngine.white_chat_output(resp);
-
+                someResponse = sendRequest(client, gson);
+                GameEngine.printOutput(Color.WHITE, "LocalOllamaAPI", "---------------------------Local StoryMaster(0) --------------------------- ");
                 JsonObject assistant = new JsonObject();
                 assistant.addProperty("role", "assistant");
-                assistant.addProperty("content", resp);
+                assistant.addProperty("content", someResponse);
                 messages.add(assistant);
+                GameEngine.INITIAL = false;
+                GameEngine.currentClient = client;
             }
 
-            // Main Game loop.
-            while (GameEngine.STARTED) {
-                //define a reference to our input queue.
-                BlockingQueue<String> q = GameEngineStaticHolder.engine.inputQueue;
-                // take the top most object of type string and define it as userInput.
-                String userInput = q.take(); // blocks
-                // if the below strings exist, exit main loop
-                if (userInput.equalsIgnoreCase("q")
-                        || userInput.equalsIgnoreCase("quit")
-                        || userInput.equalsIgnoreCase("exit")) {
-                    GameEngine.STARTED = false;
-                    break;
-                }
-                // Send the players input to the GameWindow
-                GameEngine.white_chat_output(GameEngine.playerKey + ": " + userInput);
-                // Define a json object to hold our playerInput
+            if (!GameEngine.INITIAL) {
                 JsonObject userMsg = new JsonObject();
                 userMsg.addProperty("role", "user");
-                userMsg.addProperty("content", userInput);
+                userMsg.addProperty("content", initialPrompt);
                 messages.add(userMsg);
 
                 // Send the players response to the endpoint.
-                String resp = sendRequest(client, gson);
-                GameEngine.white_chat_output("***** StoryMaster *****");
-                GameEngine.cyan_chat_output(resp);
+                someResponse = sendRequest(GameEngine.currentClient, gson);
+                GameEngine.printOutput(Color.WHITE, "LocalOllamaAPI", "----------------------Local StoryMaster ---------------------------");
                 // Define a json object to hold the LLM's response
                 JsonObject assistantMsg = new JsonObject();
                 assistantMsg.addProperty("role", "assistant");
-                assistantMsg.addProperty("content", resp);
+                assistantMsg.addProperty("content", someResponse);
                 messages.add(assistantMsg);
             }
         } catch (IOException | InterruptedException e) {
-            GameEngine.red_chat_output("Error: " + e.getMessage());
+            GameEngine.printOutput(Color.RED, "LocalOllama_API", "Error: " + e.getMessage());
             e.printStackTrace();
         }
+        return someResponse;
     }
 
-    /**
-     * Sends a chat‑completion request to the local Ollama server.
-     *
-     * @param client                the HttpClient used to perform the call
-     * @param gson                  a Gson instance for (de)serialisation
-     * @return                      the assistant's textual response
-     * @throws IOException          on network / protocol errors
-     * @throws InterruptedException if the thread is interrupted while waiting
-     */
     private static String sendRequest(HttpClient client, Gson gson) throws IOException, InterruptedException {
         //define a json object to store our properties in; used in http
         JsonObject body = new JsonObject();

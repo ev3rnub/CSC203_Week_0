@@ -4,6 +4,12 @@ import java.awt.Color;
 
 /**
  * connector for SceneWindow
+ * window setter
+ * setWindow( <SceneWindow> someWindow)
+ * window getter
+ * SceneWindow someWindow = getWindow();
+ *
+ * append to GameWindow
  */
 public final class Scene {
     private static SceneWindow window;
@@ -13,6 +19,6 @@ public final class Scene {
     // this method appends some message to our output queue.
     public static void updateSceneWindow(Color color, String message) {
         if (window != null) window.appendScene(color, message);
-        else GameEngine.red_chat_output("Scene Window NULL");
+        else GameEngine.printOutput(Color.RED, "SCENE_CONN", "Scene Window NULL");
     }
 }

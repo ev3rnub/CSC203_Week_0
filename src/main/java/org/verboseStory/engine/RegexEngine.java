@@ -1,11 +1,15 @@
 package org.verboseStory.engine;
 
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Parses the output that comes from the LLM and forwards
  * the relevant pieces to the UI.
+ *
+ * ToDo:
+ * implement a parseInput() method.
  */
 public final class RegexEngine {
 
@@ -33,11 +37,11 @@ public final class RegexEngine {
         Matcher playerMatch = player.matcher(someString);
 
         if (sceneMatch.find()) {
-            GameEngine.white_scene_output(sceneMatch.group(1));
+            GameEngine.printOutput(Color.CYAN, "REGEXENGINE", sceneMatch.group(1));
         }
 
         if (inventoryMatch.find()) {
-            GameEngine.white_inventory_output(inventoryMatch.group(1));
+            GameEngine.printOutput(Color.YELLOW, "REGEXENGINE", inventoryMatch.group(1));
         }
     }
 }
