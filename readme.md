@@ -56,11 +56,18 @@ Once you
 ## 11/18/2025
 * 1. Created Branch StarBase13_Char
 * 2. Started work on a Character class to further define the player character and NPCs.
+## 11/22/2025
+* 1. Partially finished the character class. 
+* 2. Finished a professor class. 
+* 3. Finished a student class. 
+* 4. Refactored some code, updated comments across the codebase, started using jdoc comments.
+* 5. Updated Readme.
+* 6. Started work on LocalPlayArea class.
+* 7. Created Branch Student_Start
 ### ToDO:
-* 1. Define a Weather class. 
-* 2. Define a Surface class.
-* 3. Define a LocalPlayArea class to define the local area.
-* 4. Define a API Analytics tool class to track API keys, usage. 
+* 1. Define a Weather class.
+* 2. Define a LocalPlayArea class to define the local area. 
+* 3. Define a API Analytics tool class to track API keys, usage. 
 ### BUGs/Missing Features
 * 1. Music doesn't automatically loop/restart.
 * 2. WILL Update readme.md.
