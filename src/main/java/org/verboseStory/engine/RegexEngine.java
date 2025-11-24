@@ -1,5 +1,9 @@
 package org.verboseStory.engine;
 
+import org.verboseStory.ui.Inventory;
+import org.verboseStory.ui.Scene;
+import org.verboseStory.ui.SceneWindow;
+
 import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,11 +41,11 @@ public final class RegexEngine {
         Matcher playerMatch = player.matcher(someString);
 
         if (sceneMatch.find()) {
-            GameEngine.printOutput(Color.CYAN, "REGEXENGINE", sceneMatch.group(1));
+            Scene.updateSceneWindow(Color.CYAN,  sceneMatch.group(1));
         }
 
         if (inventoryMatch.find()) {
-            GameEngine.printOutput(Color.YELLOW, "REGEXENGINE", inventoryMatch.group(1));
+            Inventory.updateInventoryWindow(Color.YELLOW, inventoryMatch.group(1));
         }
     }
 }

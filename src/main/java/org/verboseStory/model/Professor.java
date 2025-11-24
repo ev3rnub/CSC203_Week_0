@@ -15,15 +15,12 @@ public class Professor extends Character {
     public Professing currentProfessing;
 
     public Professor(String firstName, String lastName, String background, String race, String subject) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.background = background;
-        this.subject = subject;
-        this.someRace = race;
+        super(firstName, lastName, background, race, subject);
         this.setCharacterClass("PROFESSOR");
         this.setTitle("Professor");
         this.setProfessing(Professing.QUIET);
-        this.setCreditWallet(100);
+        this.setCreditWallet(10000);
+        this.setActionPoints(150);
     }
 
     // Subject the professor is considered to be an expert

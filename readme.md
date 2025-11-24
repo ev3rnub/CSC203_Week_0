@@ -1,14 +1,14 @@
 Course: CSC203
 Author: Chad Verbus
-Date: Nov 18, 2025
+Date: Nov 23, 2025
 
 ## Description:
-VerboseHominid:Starbase 13 is a single player SciFi/Fantasy text based simulation/rpg. At its current state, it's essentially a prototype chat interface to see if it would work and be fun, surprisingly it turned out to be fun.
+VerboseHominid:SunHome 13 is a single player SciFi/Fantasy text based simulation/rpg. At its current state, it's essentially a prototype chat interface to see if it would work and be fun, surprisingly it turned out to be fun.
 
-Branch Starbase13_college is the last playable build. 
+Branch Student_Start is the last playable build. 
 
 Starbase13 Start:
-* https://github.com/ev3rnub/CSC203_Week_0/tree/starbase13_start
+* https://github.com/ev3rnub/CSC203_Week_0/tree/Student_Start
 
 ## Requirements:
 * OpenJDK 25+
@@ -18,7 +18,6 @@ Starbase13 Start:
 * build, compile and have fun. 
 
 ## Usage
-Once you 
 ⚠️ Working Document – This README is a living document that will be updated throughout the semester as new topics, assignments, and resources become available.  
 
 ## 11/07/2025
@@ -57,17 +56,22 @@ Once you
 * 1. Created Branch StarBase13_Char
 * 2. Started work on a Character class to further define the player character and NPCs.
 ## 11/22/2025
-* 1. Partially finished the character class. 
+* 1. Finished a character class in place of a person class. 
 * 2. Finished a professor class. 
 * 3. Finished a student class. 
 * 4. Refactored some code, updated comments across the codebase, started using jdoc comments.
-* 5. Updated Readme.
+* 5. Updated Readme
 * 6. Started work on LocalPlayArea class.
 * 7. Created Branch Student_Start
+## 11/23/2025
+* 1. Updated StoryMaster System Instruction
+* 2. Fixed music looping issue
+* 3. Implemented classes using super to define base class properties.
+* 4. Removed some debugging statements.
+* 5. Updated comments 
+* 6. Updated readme
 ### ToDO:
+* 0. parseInput in regex engine.
 * 1. Define a Weather class.
 * 2. Define a LocalPlayArea class to define the local area. 
-* 3. Define a API Analytics tool class to track API keys, usage. 
-### BUGs/Missing Features
-* 1. Music doesn't automatically loop/restart.
-* 2. WILL Update readme.md.
+* 3. Define a API Analytics tool class to track API keys, usage.

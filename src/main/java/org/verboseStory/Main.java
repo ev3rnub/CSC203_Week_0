@@ -19,7 +19,6 @@ public class Main {
         BlockingQueue<String> queue = new LinkedBlockingQueue<>();
         // Define UI on a Event Dispatch Thread using Swing Utilities invokeLater.
         SwingUtilities.invokeLater(() -> {
-
             // Future ME: Refactor window generation.
             // Main GUI Instance
             GameWindow gameWindow = new GameWindow(queue);

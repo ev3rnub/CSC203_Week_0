@@ -12,16 +12,16 @@ import java.awt.*;
 public class Student extends Character {
         private int focusPoints = 0;
         private enum StudentMode {STUDY, PARTY, NORMAL};
+        private String someStudentSubject;
         private StudentMode currentStudentMode = StudentMode.NORMAL;
 
-        public Student(String firstName, String lastName, String someBackground, String race) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.background = someBackground;
-            this.someRace = race;
+
+        public Student(String firstName, String lastName, String someBackground, String race, String someStudentSubject) {
+            super(firstName, lastName, someBackground, race, someBackground);
             this.someCharacterClass = "STUDENT";
-            this.setTitle("Student");
-            this.setCreditWallet(100);
+            this.someStudentSubject = someStudentSubject;
+            this.setTitle(someCharacterClass);
+            this.setCreditWallet(150);
             this.setFocusPoints(5);
             this.setActionPoints(100);
         }

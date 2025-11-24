@@ -48,7 +48,7 @@ public final class GameWindow extends JFrame {
         // on close, exit completely
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         // set window size
-        setSize(1400, 780);
+        setSize(1400, 1080);
         // instance a new JPanel with a new border layout
         JPanel main = new JPanel(new BorderLayout(5, 5));
         // define its background color
@@ -209,6 +209,7 @@ public final class GameWindow extends JFrame {
     }
 
     // insert a line of text into our game window.
+    // #FUTURE ME Need to control the amount of lines displayed, Large updates disorientate.
     void appendChat(Color color, String text) {
         SwingUtilities.invokeLater(() -> {
             // get current logPanes styled document, and assign it to doc

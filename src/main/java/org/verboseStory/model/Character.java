@@ -6,6 +6,7 @@ package org.verboseStory.model;
 import org.verboseStory.engine.GameEngine;
 import org.verboseStory.engine.GameEngineStaticHolder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -31,6 +32,7 @@ public class Character {
     public String someCharacterClass;
     public String background;
     private String location;
+    private String currentQuest;
     private int hitPoints;
     private int manaPoints;
     private int actionPoints;
@@ -42,6 +44,7 @@ public class Character {
     private int wisdom;
     private int charisma;
     private int creditWallet;
+
 
     private enum Demeanor {
         CALM,
@@ -75,7 +78,7 @@ public class Character {
     //default character states
     public Demeanor currentDemeanor = Demeanor.CALM;
     public Posture currentPosture = Posture.STANDING;
-    public Locomotion currentLocamotion = Locomotion.WALKING;
+    public Locomotion currentLocomotion = Locomotion.WALKING;
 
 
     /**
@@ -84,6 +87,19 @@ public class Character {
      * String charFirstName = getFirstName();
      * output: "Aleric"
      * */
+    public Character(String firstName, String lastName, String someBackground, String someRace, String someCharacterClass) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.background = someBackground;
+        this.someRace = someRace;
+        this.someCharacterClass = someCharacterClass;
+        this.setTitle(someCharacterClass.toUpperCase());
+        this.setCreditWallet(150);
+        this.setActionPoints(150);
+        this.setExhaustionPoints(5);
+        this.someInventory = new List();
+        this.appendInventory("SH13 Visitor Pass");
+    }
     //firstname
     //setter
     public void setFirstName(String firstName){
@@ -287,7 +303,11 @@ public class Character {
     }
 
     public void setLocomotion(Locomotion newLocomotion){
-        this.currentLocamotion = newLocomotion;
+        currentLocomotion = newLocomotion;
+    }
+
+    public Locomotion getCurrentLocomotion(){
+        return currentLocomotion;
     }
     //Inventory
     /**
@@ -303,6 +323,7 @@ public class Character {
      * Get an Item.
      * String someItem = someInventory[0];
      * */
+
     public void appendInventory(String someItem){
         someInventory.add(someItem);
     }
@@ -314,6 +335,7 @@ public class Character {
     /**
      * Character "Credit Wallet", so the character can store earned credits.
      * */
+
     public void setCreditWallet(int creditWallet){
         this.creditWallet = creditWallet;
     }
@@ -326,10 +348,11 @@ public class Character {
      * Character Actions; These are default character "actions" that a player has access to directly
      * talk, sleep, sit, stand, walk, run, jog, e
      * */
+
     public void talk(){
         StringBuilder msg = new StringBuilder();
         msg.append(someTitle + " " + firstName + " " + lastName + " Hello");
-        GameEngine.printOutput(Color.GREEN, "Character", msg.toString());
+        GameEngine.printOutput(Color.GREEN, "CHARACTER", msg.toString());
     }
 
     public void rest(int hours){

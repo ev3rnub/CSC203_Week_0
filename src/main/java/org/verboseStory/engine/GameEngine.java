@@ -3,6 +3,7 @@ package org.verboseStory.engine;
 // my classes
 import com.google.gson.*;
 import org.verboseStory.api.LocalOllama_API;
+import org.verboseStory.model.Professor;
 import org.verboseStory.model.Student;
 import org.verboseStory.ui.Game;
 import org.verboseStory.ui.Scene;
@@ -69,7 +70,6 @@ public final class GameEngine {
                     String someInput = readLine();
                     printOutput(Color.YELLOW,  "", "\n\n\n");
                     printOutput(Color.YELLOW,  playerKey, someInput);
-                    printOutput(Color.YELLOW,  "", "\n\n\n");
                     String someResponse = new_dialog(someInput);
                     printOutput(Color.CYAN, geTitle, someResponse);
 
@@ -144,13 +144,24 @@ public final class GameEngine {
         parsedPC.addProperty("Title", somePlayerCharacter.getTitle());
         parsedPC.addProperty("FirstName", somePlayerCharacter.getFirstName());
         parsedPC.addProperty("LastName", somePlayerCharacter.getLastName());
-        parsedPC.addProperty("Class", somePlayerCharacter.getCharacterClass());
         parsedPC.addProperty("BackGround", somePlayerCharacter.getBackground());
+        parsedPC.addProperty("Class", somePlayerCharacter.getCharacterClass());
+        parsedPC.addProperty("Exhaustion Points", somePlayerCharacter.getExhaustionPoints());
+        parsedPC.addProperty("Mana Points", somePlayerCharacter.getManaPoints());
+        parsedPC.addProperty("Action Points", somePlayerCharacter.getActionPoints());
+        parsedPC.addProperty("Credits", somePlayerCharacter.getCreditWallet());
+        parsedPC.addProperty("Current Inventory: ", somePlayerCharacter.getInventory().toString());
+        parsedPC.addProperty("Stamina", somePlayerCharacter.getStamina());
+        parsedPC.addProperty("Strength", somePlayerCharacter.getStrength());
+        parsedPC.addProperty("Intelligence", somePlayerCharacter.getIntelligence());
+        parsedPC.addProperty("Dexterity", somePlayerCharacter.getDexterity());
+        parsedPC.addProperty("Wisdom", somePlayerCharacter.getWisdom());
+        parsedPC.addProperty("Charisma", somePlayerCharacter.getCharisma());
+
         switch (TARGET) {
             case "EXTERNALAPI" -> {
-                printOutput(Color.CYAN, "GameEngine", "CharacterSheet: " + parsedPC.getAsJsonObject().toString() + "UserInput: " + someInput);
                 currentResponse = Xai_Api.invokeResponseFromGrok(
-                        "CharacterSheet: " + parsedPC.getAsJsonObject().toString() + "UserInput: " + someInput);
+                        " CharacterSheet: " + parsedPC.getAsJsonObject().toString() + " UserInput: " + someInput);
                         DIALOGSTARTED = true;
             }
             case "INTERNALAPI" -> {
@@ -159,7 +170,7 @@ public final class GameEngine {
                 DIALOGSTARTED = true;
             }
             default -> {
-                printOutput(Color.CYAN, "GameEngine", "ERROR---------------- " + TARGET + "not implemented yet./Invalid Input");
+                printOutput(Color.CYAN, "GameEngine", "ERROR---------------- " + TARGET + "not implemented yet./Invalid Input\n");
             }
         }
         return currentResponse;
@@ -175,45 +186,54 @@ public final class GameEngine {
     //Character creation.
     // Required input/data to create a player character in VerboseHominid:SunHome13.
     public Character createCharacter() throws InterruptedException {
-        Game.updateChatWindow(Color.YELLOW, "------------------------------------------------");
-        Game.updateChatWindow(Color.YELLOW, "Enter Character First Name:---------------------");
+        Game.updateChatWindow(Color.YELLOW, "------------------------------------------------\n");
+        Game.updateChatWindow(Color.YELLOW, "Enter Character First Name:---------------------\n");
         String firstName = readLine();
         playerKey = firstName.trim();
-        Game.updateChatWindow(Color.YELLOW, "Enter Character Last Name:---------------------");
+        Game.updateChatWindow(Color.YELLOW, "Enter Character Last Name:---------------------\n");
         String lastName = readLine();
         listRaces();
         Game.updateChatWindow(Color.YELLOW, "\n\n");
-        Game.updateChatWindow(Color.YELLOW, "Choose your Character's Race:------------------");
+        Game.updateChatWindow(Color.YELLOW, "Choose your Character's Race:------------------\n");
         String someRace = readLine();
         Game.updateChatWindow(Color.YELLOW, "\n\n");
         listClasses();
         Game.updateChatWindow(Color.YELLOW, "\n\n");
         Game.updateChatWindow(Color.YELLOW, "\n\n");
-        Game.updateChatWindow(Color.YELLOW, "Choose your Character's Class:-----------------");
+        Game.updateChatWindow(Color.YELLOW, "Choose your Character's Class:-----------------\n");
         String someCharacterClass = readLine().toLowerCase();
-        String someSubject;
+        String someSubject = "Tanic Technologies";
         // if professor class, ask for specific professor class inputs. This is not presented as a playable character
         // class :).
         if (someCharacterClass.equals("professor")) {
             listEDUSubjects();
-            Game.updateChatWindow(Color.YELLOW, "Define your Subject:-----------------------");
+            Game.updateChatWindow(Color.YELLOW, "Define your Subject:-----------------------\n");
             someSubject = readLine();
-            Game.updateChatWindow(Color.YELLOW, "Subject embedded-----------------------");
+            Game.updateChatWindow(Color.YELLOW, "Subject embedded-----------------------\n");
+        }
+        if (someCharacterClass.equals("student")) {
+            listEDUSubjects();
+            Game.updateChatWindow(Color.YELLOW, "Define your Subject:-----------------------\n");
+            someSubject = readLine();
+            Game.updateChatWindow(Color.YELLOW, "Subject embedded-----------------------\n");
         }
         Game.updateChatWindow(Color.YELLOW, "Define your Background--------------------\n");
         Game.updateChatWindow(Color.YELLOW, "Example:---Define keywords; poor, dead beat dad,\n");
         Game.updateChatWindow(Color.YELLOW, "--------------------------quest to find a staff.\n");
         Game.updateChatWindow(Color.YELLOW, "------------------------------------------\n");
         String someBackground = readLine();
-        Game.updateChatWindow(Color.YELLOW, "Background embedded-----------------------");
+        Game.updateChatWindow(Color.YELLOW, "Background embedded-----------------------\n");
         Game.updateChatWindow(Color.YELLOW, "\n\n\n\n\n");
 
-        Student someCharacter = null;
+
+        Character someCharacter = null;
         switch(someCharacterClass.toLowerCase()) {
             case "student":
-                someCharacter = new Student(firstName, lastName, someBackground, someRace);
+                someCharacter = new Student(firstName, lastName, someBackground, someRace, someSubject);
+            case "professor":
+                someCharacter =  new Professor(firstName, lastName, someBackground, someRace, someSubject);
             default:
-                Game.updateChatWindow(Color.YELLOW, "\n\n");
+                someCharacter = new Character(firstName, lastName, someBackground, someRace, someCharacterClass);
         }
         return someCharacter;
     }
@@ -296,7 +316,7 @@ public final class GameEngine {
 
     public static void listCharacter() {
         List<Character> someGroup = playerGroup;
-        Game.updateChatWindow(Color.YELLOW, "Character Sheet:---------------------------- v000");
+        Game.updateChatWindow(Color.YELLOW, "Character Sheet:--------------WIP----------- v000");
         Game.updateChatWindow(Color.YELLOW, "Character Title:--------------------------- " + someGroup.get(0).getTitle());
         Game.updateChatWindow(Color.YELLOW, "First Name:-------------------------------- " + someGroup.get(0).getFirstName());
         Game.updateChatWindow(Color.YELLOW, "Last Name:--------------------------------- " + someGroup.get(0).getLastName());
@@ -316,27 +336,28 @@ public final class GameEngine {
         Game.updateChatWindow(Color.YELLOW, "Dex:--------------------------------------- " + someGroup.get(0).getDexterity());
         Game.updateChatWindow(Color.YELLOW, "Wis:--------------------------------------- " + someGroup.get(0).getWisdom());
         Game.updateChatWindow(Color.YELLOW, "Cha:--------------------------------------- " + someGroup.get(0).getCharisma());
+        Game.updateChatWindow(Color.YELLOW, "--------------------WIP--------------------------");
     }
 
     // List the Sunhome13's newly established College.
     public static void listEDUSubjects(){
         StringBuilder subjects = new StringBuilder();
-        subjects.append("CURRENT Educational Subjects----------------------------------------")
-                .append("Magic--------------------------------------------------------------A")
+        subjects.append("CURRENT Educational Subjects----------------------------------------\n")
+                .append("Magic--------------------------------------------------------------A\n")
                 .append("\n\n")
                 .append("I.----------------------------------------- Geomancy Fundamentals:\n")
                 .append("II.------------------------------------------------ Soul Dynamics:\n")
-                .append("III.------------------------------------------------- Astral Theory:")
-                .append("IV.------------------- Advanced Astral-Physical Manipulation Theory:")
+                .append("III.------------------------------------------------- Astral Theory:\n")
+                .append("IV.------------------- Advanced Astral-Physical Manipulation Theory:\n")
                 .append("\n\n")
-                .append("Technology---------------------------------------------------------B")
+                .append("Technology---------------------------------------------------------B\n")
                 .append("\n\n")
                 .append("I.-------------------------------------------- Tanic Technologies:\n")
                 .append("II.-------------------------------- Tanic Harvesting Technologies:\n")
                 .append("III.------------------------------- Tanic Processing Technologies:\n")
                 .append("IV.---- Advanced Astral-Physical Tanic Manipulation Technologies:\n:")
                 .append("\n\n")
-                .append("Mythology--------------------------------------------------------C")
+                .append("Mythology--------------------------------------------------------C\n")
                 .append("\n\n")
                 .append("I.----------------------------------------- Mythology: Malilarians\n")
                 .append("II.-------------------------------------------- Mythology: Wraiths\n")
