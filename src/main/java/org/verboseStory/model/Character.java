@@ -1,8 +1,5 @@
 package org.verboseStory.model;
-// Chad V.
-//[ Class  | ---------Professor | ---------------------------------------Assignment Title ]
-//[ CSC203 | ------------Prof H | ----------------Object Oriented Programming Inheritance ]
-//[ Student Child Class of Character | -------------------------------------- Requirement ]
+
 import org.verboseStory.engine.GameEngine;
 import org.verboseStory.engine.GameEngineStaticHolder;
 import java.awt.*;

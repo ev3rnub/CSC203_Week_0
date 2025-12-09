@@ -70,8 +70,15 @@ Starbase13 Start:
 * 4. Removed some debugging statements.
 * 5. Updated comments 
 * 6. Updated readme
+## 12/09/2025
+* 1. Defined a simple weather class. WIP
+* 2. Defined a localarea class, to define hard parameters for the local area surrounding the player.
+* 3. Created new branch, "detained"; In this branch, I will focus on using local area and classes only, making the world a bit smaller.
+### InWork:
+* 0. Regex Engine.
 ### ToDO:
-* 0. parseInput in regex engine.
-* 1. Define a Weather class.
-* 2. Define a LocalPlayArea class to define the local area. 
-* 3. Define a API Analytics tool class to track API keys, usage.
+* 0. Define the remaining character classes.
+* 1. Define some class, to monitor, manage the local area
+* 2. Define some class, to monitor the characters state and other NPCs in local area.
+* 3. Define some class to manage direction/quests.
+* 4. Define a API Analytics tool class to track API keys, usage.

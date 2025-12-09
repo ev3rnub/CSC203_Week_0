@@ -6,6 +6,25 @@ package org.verboseStory.model;
  * Loot, Puzzles, Quests, Questlines, doors) in the room.
  * WIP
  * */
+
 public class Localarea {
-    public enum AreaType {OUTSIDE, INSIDE, COVERED, UNDERGROUND};
+    private enum AreaType {OUTSIDE, INSIDE};
+    private enum FloorType {DIRT, STONE, GLASS, WOOD, ROCK, SAND, METAL};
+    private enum WallType {DIRT, STONE, GLASS, WOOD, ROCK, SAND, METAL};
+    private enum AtmosType {VACUUM, BREATHABLE, UNBREATHABLE}
+
+    AreaType defaultArea;
+    FloorType defaultFloor;
+    WallType defaultWall;
+    AtmosType defaultAtmosType;
+
+//
+
+     public Localarea(AreaType someArea, FloorType someFloor, WallType someWall, AtmosType someAtmos){
+        //        Defaults
+       this.defaultArea = someArea;
+       this.defaultFloor = someFloor;
+       this.defaultWall = someWall;
+       this.defaultAtmosType = someAtmos;
+    }
 }
