@@ -91,6 +91,8 @@ Starbase13 Start:
 * 0. Regex/Game Engine; Work continued. 
 ## 12/16/2025
 * 1. Modified prompt and logic to parse location, and character state.
+## 12/16/2025
+* 1. Created branch "StaffOfVertonal."
 ### InWork:
 * 0. ImagesManager class.
 ### ToDO:
