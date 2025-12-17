@@ -87,14 +87,16 @@ Starbase13 Start:
 * 3. Attempted to fix WALL o TEXT during character creation however I removed it all as it wasn't working and I wasn't happy.
 ## 12/14/2025
 * 0. Regex/Game Engine; Continued development of backend functionality. Parsing LLM output. 
-* 1. Modified 
+## 12/15/2025
+* 0. Regex/Game Engine; Work continued. 
+## 12/16/2025
+* 1. Modified prompt and logic to parse location, and character state.
 ### InWork:
-* 0. General additions for character statistics and model. 
+* 0. ImagesManager class.
 ### ToDO:
 * 0. Define the remaining character classes.
-* 1. Define some class, to monitor, manage the local area
-* 2. Define some class, to monitor the characters state and other NPCs in local area.
-* 3. Define some class to manage direction/quests.
-* 4. Define a API Analytics tool class to track API keys, usage.
-* 5. Define a GUI Volume knob, define functionality for said volume knob. 
-* 6. Define a GUI Element to switch tracks. 
+* 1. Define some class to manage direction/quests.
+* 2. Define a API Analytics tool class to track API keys, usage.
+* 3. Define a GUI Volume knob, define functionality for said volume knob. 
+* 4. Define a GUI Element to switch tracks.
+* 5. Define a GUI Element to display images to describe the SCENE.
