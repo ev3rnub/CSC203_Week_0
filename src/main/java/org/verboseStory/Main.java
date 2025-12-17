@@ -2,7 +2,6 @@
 package org.verboseStory;
 // my classes
 import org.verboseStory.engine.GameEngine; //logic, api connector
-import org.verboseStory.engine.GameEngineStaticHolder; // reference
 import org.verboseStory.engine.SoundEngine;
 import org.verboseStory.ui.*;
 // import swing libraries along with concurrency utilities.
@@ -36,14 +35,12 @@ public class Main {
             inventoryWindow.setVisible(false);
 
             // Note GUI Instance
-            NoteWindow noteWindow = new NoteWindow(queue, "Diary");
+            NoteWindow noteWindow = new NoteWindow(queue, "Notes");
             Note.setWindow(noteWindow);
             noteWindow.setVisible(false);
 
             //Game Engine Instance
             GameEngine engine = new GameEngine(queue);
-            // a reference so that any other part of my code can interact with GameEngine without passing it around.
-            GameEngineStaticHolder.engine = engine;
             // instance background music
             SoundEngine soundEngine = new SoundEngine();
             // spawn new separate thread for sound.

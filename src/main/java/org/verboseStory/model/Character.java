@@ -1,10 +1,9 @@
 package org.verboseStory.model;
 
+import com.google.gson.JsonObject;
 import org.verboseStory.engine.GameEngine;
-import org.verboseStory.engine.GameEngineStaticHolder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * This is my version of a "person" class.
@@ -40,7 +39,11 @@ public class Character {
     private int intelligence;
     private int wisdom;
     private int charisma;
+    private int xp;
+    private String totalPlayTime;
+    private int totalTurn;
     private int creditWallet;
+    private int characterLevel;
 
 
     private enum Demeanor {
@@ -67,7 +70,7 @@ public class Character {
         RAGE,
     };
 
-    private List someInventory;
+    private ArrayList<String> someInventory;
 
     // Character State
     private enum Posture {PRONE, CRAWL, CROUCH, KNEELING, SITTING, STANDING};
@@ -84,18 +87,71 @@ public class Character {
      * String charFirstName = getFirstName();
      * output: "Aleric"
      * */
-    public Character(String firstName, String lastName, String someBackground, String someRace, String someCharacterClass) {
+    public Character(String firstName, String lastName, String someRace, String someCharacterClass) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.background = someBackground;
         this.someRace = someRace;
         this.someCharacterClass = someCharacterClass;
         this.setTitle(someCharacterClass.toUpperCase());
         this.setCreditWallet(150);
         this.setActionPoints(150);
         this.setExhaustionPoints(5);
-        this.someInventory = new List();
-        this.appendInventory("SH13 Visitor Pass");
+        this.setXP(0);
+        this.characterLevel = 1;
+        this.totalPlayTime = "00:00:00";
+        this.someInventory = new ArrayList<String>();
+        this.appendInventory("Alathis Tech PDP, a Latonian tech device used as a journal, Personal Data Pad developed by Alathis CORP (included w/SH13 Visitor Pass), Can scan and save data cards\n");
+        this.appendInventory("Ev3rnub's Annotated Guide to the Galaxy:vol 1, A simple humorous 14 Step guide on suvival in the local Galaxy.\n");
+    }
+    //get character stats
+    public JsonObject getCharacterStats(){
+        JsonObject someCharacterObject = new JsonObject();
+        someCharacterObject.addProperty("FirstName", firstName);
+        someCharacterObject.addProperty("LastName", lastName);
+        someCharacterObject.addProperty("Hitpoints", hitPoints);
+        someCharacterObject.addProperty("ManaPoints", manaPoints);
+        someCharacterObject.addProperty("ActionPoints", actionPoints);
+        someCharacterObject.addProperty("ExhaustionPoints", exhaustionPoints);
+        someCharacterObject.addProperty("ExperiencePoints", xp);
+        someCharacterObject.addProperty("Race", someRace);
+        someCharacterObject.addProperty("Class", someCharacterClass);
+        someCharacterObject.addProperty("Title", someTitle);
+        someCharacterObject.addProperty("Intelligence", intelligence);
+        someCharacterObject.addProperty("Strength", strength);
+        someCharacterObject.addProperty("Dexterity", dexterity);
+        someCharacterObject.addProperty("Charisma", charisma);
+        someCharacterObject.addProperty("Wisdom", wisdom);
+        someCharacterObject.addProperty("Stamina", stamina);
+        someCharacterObject.addProperty("Credits", creditWallet);
+        someCharacterObject.addProperty("Inventory", getInventory().toString());
+        return someCharacterObject;
+    }
+    //quest
+    public void setQuest(String quest){
+        this.currentQuest = quest;
+    }
+
+    public  String getQuest(){
+        return this.currentQuest;
+    }
+    //level
+    public void setLevel(int level){
+        this.characterLevel = level;
+    }
+
+    public void addLevel(int level){
+        this.characterLevel += level;
+    }
+    public int getLevel(){
+        return this.characterLevel;
+    }
+    //setter
+    public void setXP(int xp){
+        this.xp = xp;
+    }
+    //getter
+    public int getXP(){
+        return this.xp;
     }
     //firstname
     //setter
@@ -207,8 +263,8 @@ public class Character {
 
     //exhaustionPoints
     /**Exhaustion Points will be used by the AI to restrict Character movement, .
-     * .. int mp = someCharacter.getManaPoints();
-     * .. someCharacter.setManaPoints(100)
+     * .. int mp = someCharacter.getExhaustionPoints();
+     * .. someCharacter.setExhaustionPoints(100)
      * */
     public void setExhaustionPoints(int exhaustionPoints){
         this.exhaustionPoints = exhaustionPoints;
@@ -325,7 +381,11 @@ public class Character {
         someInventory.add(someItem);
     }
 
-    public List getInventory(){
+    public void removeItemInventory(String someItem){
+        someInventory.remove(someItem);
+    }
+
+    public ArrayList<String> getInventory(){
         return someInventory;
     }
 
@@ -335,6 +395,10 @@ public class Character {
 
     public void setCreditWallet(int creditWallet){
         this.creditWallet = creditWallet;
+    }
+
+    public void addCreditWallet(int creditWallet){
+        this.creditWallet += creditWallet;
     }
 
     public int getCreditWallet(){
@@ -396,18 +460,8 @@ public class Character {
      * */
     public void eat(String someFood){
         StringBuilder msg = new StringBuilder();
-        msg.append(someTitle + " " + firstName + " " + lastName + " is Eating " + someFood);
+        msg.append(someTitle + " : " + firstName + " " + lastName + " is Eating " + someFood);
         GameEngine.printOutput(Color.GREEN, "CHARACTER", msg.toString());
         //add food calories to digestion
-    }
-
-    // Not sure I need this, as I"ll already have a reference; Though I thought I could use it
-    // in the future to automatically pass updates through the queue, for the character sheet.
-    // update the engines input queue with a character message
-    public void updateEngine(String someUpdateMsg){
-        BlockingQueue<String> anInputQueue = GameEngineStaticHolder.engine.inputQueue;
-        if(!someUpdateMsg.isEmpty()){
-            anInputQueue.offer(someUpdateMsg);
-        }
     }
 }

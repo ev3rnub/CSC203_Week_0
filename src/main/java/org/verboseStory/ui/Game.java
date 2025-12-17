@@ -17,10 +17,10 @@ public final class Game {
     // this class appends some message to our output queue. Then passes the message to RegexEngine to be parsed.
     public static void updateChatWindow(Color color, String message) {
         if (window != null) {
+            // Parse the message for special tags (XP, TIME, SCENE, etc.)
+            RegexEngine.parseOutput(message);
             // appendChat to our game window
             window.appendChat(color, message);
-            // regex engine parse strings.
-            RegexEngine.parseOutput(message);
         }
     }
 }

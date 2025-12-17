@@ -32,7 +32,6 @@ public class SoundEngine {
                     someClip = AudioSystem.getClip();
                     someClip.open(audioInputStream);
                     someClip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the audio continuously
-                    someClip.start();
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                     e.printStackTrace();
                 }

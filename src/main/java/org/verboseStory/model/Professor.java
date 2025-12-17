@@ -14,8 +14,8 @@ public class Professor extends Character {
     private int effortPoints;
     public Professing currentProfessing;
 
-    public Professor(String firstName, String lastName, String background, String race, String subject) {
-        super(firstName, lastName, background, race, subject);
+    public Professor(String firstName, String lastName, String race, String subject) {
+        super(firstName, lastName, race, subject);
         this.setCharacterClass("PROFESSOR");
         this.setTitle("Professor");
         this.setProfessing(Professing.QUIET);

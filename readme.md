@@ -74,11 +74,27 @@ Starbase13 Start:
 * 1. Defined a simple weather class. WIP
 * 2. Defined a localarea class, to define hard parameters for the local area surrounding the player.
 * 3. Created new branch, "detained"; In this branch, I will focus on using local area and classes only, making the world a bit smaller.
+## 12/11/2025
+* 0. Regex Engine; Implemented parsing for tracking xp, game turns.
+* 1. Game Engine; Implemented functionality to update character xp, total game turns, and started work on the passage of time for actions.
+## 12/12/2025
+* 0. Game Engine; Began accounting for time, game turns, xp.
+* 1. Character Class; Implemented xp and supporting methods.
+## 12/13/2025
+* 0. Game Engine/Regex Engine/Character Model; Implemented the accounting for time, game turns, xp.
+* 1. Game Engine/Xai_API; Moved functionality from Xai_API class to the game engine. Created a supporting method
+* 2. Updated Instruction prompts and added an additional prompt to generate character description based on stats.
+* 3. Attempted to fix WALL o TEXT during character creation however I removed it all as it wasn't working and I wasn't happy.
+## 12/14/2025
+* 0. Regex/Game Engine; Continued development of backend functionality. Parsing LLM output. 
+* 1. Modified 
 ### InWork:
-* 0. Regex Engine.
+* 0. General additions for character statistics and model. 
 ### ToDO:
 * 0. Define the remaining character classes.
 * 1. Define some class, to monitor, manage the local area
 * 2. Define some class, to monitor the characters state and other NPCs in local area.
 * 3. Define some class to manage direction/quests.
 * 4. Define a API Analytics tool class to track API keys, usage.
+* 5. Define a GUI Volume knob, define functionality for said volume knob. 
+* 6. Define a GUI Element to switch tracks. 

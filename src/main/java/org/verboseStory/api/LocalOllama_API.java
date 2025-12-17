@@ -1,7 +1,6 @@
 package org.verboseStory.api;
 // local classes
 import org.verboseStory.engine.GameEngine;
-import org.verboseStory.engine.GameEngineStaticHolder;
 // std
 import java.awt.*;
 import java.io.IOException;

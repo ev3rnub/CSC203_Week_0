@@ -10,7 +10,10 @@ public final class Inventory {
     public static InventoryWindow getWindow() { return window; }
     // this method appends some message to our output queue.
     public static void updateInventoryWindow(Color color, String message) {
-        if (window != null) window.appendToWindow(color, message);
-        else GameEngine.printOutput(Color.RED, "Inventory", "Inventory Window NULL");
+        if (window != null){
+            window.appendToWindow(color, message);
+        } else {
+            GameEngine.printOutput(Color.RED, "Inventory", "Inventory Window NULL");
+        }
     }
 }

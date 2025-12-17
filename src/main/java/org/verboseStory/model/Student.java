@@ -16,9 +16,8 @@ public class Student extends Character {
         private StudentMode currentStudentMode = StudentMode.NORMAL;
 
 
-        public Student(String firstName, String lastName, String someBackground, String race, String someStudentSubject) {
-            super(firstName, lastName, someBackground, race, someBackground);
-            this.someCharacterClass = "STUDENT";
+        public Student(String firstName, String lastName, String race, String someStudentSubject) {
+            super(firstName, lastName, race, "STUDENT");
             this.someStudentSubject = someStudentSubject;
             this.setTitle(someCharacterClass);
             this.setCreditWallet(150);

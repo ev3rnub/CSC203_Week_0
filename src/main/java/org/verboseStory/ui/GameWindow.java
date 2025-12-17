@@ -42,7 +42,7 @@ public final class GameWindow extends JFrame {
     // Game widow constructor, defines all the things our player observes.
     public GameWindow(BlockingQueue<String> inputQueue) {
         // window title
-        super("Verbose Hominid:SunHome13 v0.0.4: Story Master");
+        super("Verbose Hominid:SunHome13 v0.1.0: INTERFACE");
         // define queue
         this.inputQueue = inputQueue;
         // on close, exit completely
@@ -50,7 +50,7 @@ public final class GameWindow extends JFrame {
         // set window size
         setSize(1400, 1080);
         // instance a new JPanel with a new border layout
-        JPanel main = new JPanel(new BorderLayout(5, 5));
+        JPanel main = new JPanel(new BorderLayout(25, 25));
         // define its background color
         main.setBackground(Color.BLACK);
         //set the content to main.
@@ -91,7 +91,7 @@ public final class GameWindow extends JFrame {
 
         // define our buttons
         sendButton = createButton("Send");
-        sceneButton = createButton("Scene");
+        sceneButton = createButton("History");
         inventoryButton = createButton("Inventory");
         noteButton = createButton("Note");
         stopMusicButton = createButton("Stop Music");
@@ -113,9 +113,9 @@ public final class GameWindow extends JFrame {
         // define a JMenuBar
         gameMenuBar = new JMenuBar();
         // create Character Menu
-        JMenu charMenu = new JMenu("Character");
+        JMenu charMenu = new JMenu("Hominid");
         // create menu items for character menu
-        JMenuItem charInfo = new JMenuItem("Character Info");
+        JMenuItem charInfo = new JMenuItem("Hominid Info");
         charMenu.add(charInfo);
         // add our new menu, and menu items to our menu bar
         gameMenuBar.add(charMenu);
@@ -221,7 +221,7 @@ public final class GameWindow extends JFrame {
             // try and insert text into doc at its last index, if error catch it and print to stack trace for debugging.
             try {
                 doc.insertString(doc.getLength(), text + "\n", style);
-                //#FUTUREME NEED to check doc ength and purge accordingly
+                //#FUTUREME NEED to check doc length and purge accordingly
                 logPane.setCaretPosition(doc.getLength());
             } catch (BadLocationException ex) {
                 ex.printStackTrace();

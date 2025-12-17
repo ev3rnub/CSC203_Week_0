@@ -42,7 +42,7 @@ public final class InventoryWindow extends JFrame {
             Style style = inventoryPane.addStyle("color", null);
             StyleConstants.setForeground(style, color);
             try {
-                doc.insertString(doc.getLength(), text + "\n", style);
+                doc.insertString(0, text + "\n", style);
                 inventoryPane.setCaretPosition(doc.getLength());
             } catch (BadLocationException ex) {
                 ex.printStackTrace();
